@@ -1,0 +1,23 @@
+.container__pais{
+    background-color: var(--branco);
+    margin: 0 2em;
+    border-radius: 5px;
+}
+
+.container__pais>img{
+    width: 100%;
+    border-radius: 5px;
+}
+
+.container__info-paises{
+    padding: 2.5em 1em;
+}
+
+.nome-pais{
+    margin-bottom: 1.5em;
+}
+
+.paragrafo-pais{
+    margin-bottom: 0.5em;
+}
+

@@ -1,0 +1,11 @@
+#filtro{
+    margin: 2em 0;
+    padding: 1em;
+    padding-right: 2.5em;
+    border: none;
+    border-radius: 5px;
+}
+
+select:invalid {
+    color: var(--placeholder)
+}
