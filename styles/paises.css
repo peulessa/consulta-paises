@@ -1,6 +1,6 @@
 .container__pais{
     background-color: var(--branco);
-    margin: 0 2em;
+    margin: 2em 2em;
     border-radius: 5px;
 }
 
@@ -21,3 +21,11 @@
     margin-bottom: 0.5em;
 }
 
+.pais-label{
+    display: flex;
+    flex-direction: column;
+}
+
+.pais-btn{
+    display: none;
+}
