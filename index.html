@@ -20,25 +20,28 @@
     </header>
 
     <main>
-      <section class="container__pesquisa">
-        <input type="search" class="pesquisa" placeholder="Pesquise um país" />
-      </section>
+      
+      <section class="container__filtro-pesquisa">
+        <div class="container__pesquisa">
+          <input type="search" class="pesquisa" placeholder="Pesquise um país" />
+        </div>
 
-      <section class="container__filtro">
-        <select
-          required
-          name="regiões"
-          id="filtro"
-          placeholder="Filtre por região"
-        >
-          <option value="" disabled selected>Filtre por região...</option>
-          <option value="África">África</option>
-          <option value="África">América</option>
-          <option value="África">Asia</option>
-          <option value="África">Europa</option>
-          <option value="África">Oceania</option>
-          <option value="África">Todos</option>
-        </select>
+        <div class="container__filtro">
+          <select
+            required
+            name="regiões"
+            id="filtro"
+            placeholder="Filtre por região"
+          >
+            <option value="" disabled selected>Filtre por região...</option>
+            <option value="África">África</option>
+            <option value="África">América</option>
+            <option value="África">Asia</option>
+            <option value="África">Europa</option>
+            <option value="África">Oceania</option>
+            <option value="África">Todos</option>
+          </select>
+        </div>
       </section>
 
       <section class="container__paises"></section>
