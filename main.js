@@ -1,29 +1,22 @@
-let botaoDark = document.querySelector('.dark-mode-input')
-botaoDark.addEventListener('click', ()=>{
-    console.log('Clicou')
-})
+imprimeTodosPaises();
+async function imprimeTodosPaises() {
+  let tp = await fetch("https://restcountries.com/v3.1/all");
+  let todosPaises = await tp.json();
 
-imprimeTodosPaises()
+  // IMPRIME TODOS OS PAÍSES NA TELA //
+  todosPaises.forEach((element) => {
+    let bandeira = element.flags.svg;
+    let nome = element.name.common;
+    let populacao = element.population;
+    let continente = element.continents;
+    if (element.capital) {
+      capital = element.capital[0];
+    }
+    let subRegiao = element.subregion;
 
-async function imprimeTodosPaises(){
-    let tp = await fetch('https://restcountries.com/v3.1/all')
-    let todosPaises = await tp.json()
-    
-    todosPaises.forEach(element => {
-        
-        let bandeira = element.flags.svg
-        let nome = element.name.common
-        let populacao = element.population
-        let continente = element.continents
-        if(element.capital){
-            capital = element.capital[0]
-        }
-        let subRegiao = element.subregion
+    let divPaises = document.querySelector(".container__paises");
 
-        let divPaises = document.querySelector('.container__paises')
-
-        divPaises.innerHTML += 
-            `<div class="container__pais">
+    divPaises.innerHTML += `<div class="container__pais">
                 <label class="pais-label">
                     <input type="button" class="pais-btn">
                     <img src="${bandeira}" alt="Bandeira do País">
@@ -42,16 +35,41 @@ async function imprimeTodosPaises(){
                         </p>
                     </div>
                 </label>
-            </div>`
-    })
-    
-    let btnPais = document.querySelectorAll('.pais-btn')
-    
-    btnPais.forEach(element => {
-        element.addEventListener('click', () =>{
-            console.log('clicou')
-        })
-    })
-    
+            </div>`;
+  });
 
+  // PESQUISA TODOS OS PAÍSES NA TELA //
+  let nomePaises = document.querySelectorAll(".nome-pais");
+  let nomePaisesArray = Array.from(nomePaises);
+  let inputPesquisa = document.querySelector(".pesquisa");
+
+  function escondePaises() {
+    nomePaisesArray
+      .filter(
+        (element) =>
+          !element.innerText
+            .toLowerCase()
+            .includes(inputPesquisa.value.toLowerCase())
+      )
+      .forEach((element) => {
+        element.closest(".container__pais").classList.add("hidden");
+      });
+  }
+
+  function mostraPaises() {
+    nomePaisesArray
+      .filter((element) =>
+        element.innerText
+          .toLowerCase()
+          .includes(inputPesquisa.value.toLowerCase())
+      )
+      .forEach((element) => {
+        element.closest(".container__pais").classList.remove("hidden");
+      });
+  }
+
+  inputPesquisa.addEventListener("input", () => {
+    escondePaises();
+    mostraPaises();
+  });
 }

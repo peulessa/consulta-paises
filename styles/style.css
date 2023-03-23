@@ -1,48 +1,48 @@
-@import url('https://fonts.googleapis.com/css2?family=Overpass:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Overpass:wght@400;700&display=swap");
 @import url(/styles/pesquisa.css);
 @import url(/styles/filtro.css);
 @import url(/styles/paises.css);
 
-:root{
-    --EscuroElementos: hsl(209, 23%, 22%);
-    --escuroTX: hsl(200, 15%, 8%);
-    --branco: hsl(0, 0%, 98%);
-    --claroBG: hsl(0, 0%, 92%);
-    --escuroBG: hsl(207, 26%, 17%);
-    --placeholder: #9F9F9F;
+:root {
+  --EscuroElementos: hsl(209, 23%, 22%);
+  --escuroTX: hsl(200, 15%, 8%);
+  --branco: hsl(0, 0%, 98%);
+  --claroBG: hsl(0, 0%, 92%);
+  --escuroBG: hsl(207, 26%, 17%);
+  --placeholder: #9f9f9f;
 }
 
-*{
-    margin: 0;
-    padding: 0;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-body{
-    background-color: var(--claroBG);
-    font-family: 'Overpass', sans-serif;
+body {
+  background-color: var(--claroBG);
+  font-family: "Overpass", sans-serif;
 }
 
-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2em 1em;
-    font-size: 0.8em;
-    background-color: var(--branco);
-    box-shadow: 0 1px 2px rgb(228, 217, 217);
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2em 1em;
+  font-size: 0.8em;
+  background-color: var(--branco);
+  box-shadow: 0 1px 2px rgb(228, 217, 217);
 }
 
-.dark-mode-label{
-    display: flex;
-    align-items: center;
-    column-gap: 0.5em;
-    cursor: pointer;
+.dark-mode-label {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5em;
+  cursor: pointer;
 }
 
-.dark-mode-input{
-    display: none;
+.dark-mode-input {
+  display: none;
 }
 
-main{
-    margin: 1em;
+main {
+  margin: 1em;
 }

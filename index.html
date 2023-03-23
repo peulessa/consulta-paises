@@ -1,45 +1,49 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Países</title>
-    <link rel="stylesheet" href="/styles/style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/styles/style.css" />
+  </head>
+  <body>
     <header>
-        <h2>Onde no mundo?</h2>
-        <div class="dark">
-            <label class="dark-mode-label">
-                <input type="checkbox" class="dark-mode-input">
-                <img src="img/lua-escura.png" alt="Meia lua que indica o modo dark">
-                <p>Dark Mode</p>
-            </label>
-        </div>
+      <h2>Onde no mundo?</h2>
+      <div class="dark">
+        <label class="dark-mode-label">
+          <input type="checkbox" class="dark-mode-input" />
+          <img src="img/lua-escura.png" alt="Meia lua que indica o modo dark" />
+          <p>Dark Mode</p>
+        </label>
+      </div>
     </header>
 
     <main>
-        <section class="container__pesquisa">
-            <input type="search" class="pesquisa" placeholder="Pesquise um país">
-        </section>
+      <section class="container__pesquisa">
+        <input type="search" class="pesquisa" placeholder="Pesquise um país" />
+      </section>
 
-        <section class="container__filtro">
-            <select required name="regiões" id="filtro" placeholder="Filtre por região">
-                <option value="" disabled selected>Filtre por região...</option>
-                <option value="África">África</option>
-                <option value="África">América</option>
-                <option value="África">Asia</option>
-                <option value="África">Europa</option>
-                <option value="África">Oceania</option>
-                <option value="África">Todos</option>
-            </select>
-        </section>
+      <section class="container__filtro">
+        <select
+          required
+          name="regiões"
+          id="filtro"
+          placeholder="Filtre por região"
+        >
+          <option value="" disabled selected>Filtre por região...</option>
+          <option value="África">África</option>
+          <option value="África">América</option>
+          <option value="África">Asia</option>
+          <option value="África">Europa</option>
+          <option value="África">Oceania</option>
+          <option value="África">Todos</option>
+        </select>
+      </section>
 
-        <section class="container__paises">
-        </section>
+      <section class="container__paises"></section>
     </main>
-    
+
     <script src="main.js"></script>
-</body>
+  </body>
 </html>

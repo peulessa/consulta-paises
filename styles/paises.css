@@ -1,31 +1,35 @@
-.container__pais{
-    background-color: var(--branco);
-    margin: 2em 2em;
-    border-radius: 5px;
+.container__pais {
+  background-color: var(--branco);
+  margin: 2em 2em;
+  border-radius: 5px;
 }
 
-.container__pais>img{
-    width: 100%;
-    border-radius: 5px;
+.container__pais > img {
+  width: 100%;
+  border-radius: 5px;
 }
 
-.container__info-paises{
-    padding: 2.5em 1em;
+.container__info-paises {
+  padding: 2.5em 1em;
 }
 
-.nome-pais{
-    margin-bottom: 1.5em;
+.nome-pais {
+  margin-bottom: 1.5em;
 }
 
-.paragrafo-pais{
-    margin-bottom: 0.5em;
+.paragrafo-pais {
+  margin-bottom: 0.5em;
 }
 
-.pais-label{
-    display: flex;
-    flex-direction: column;
+.pais-label {
+  display: flex;
+  flex-direction: column;
 }
 
-.pais-btn{
-    display: none;
+.pais-btn {
+  display: none;
+}
+
+.hidden {
+  display: none;
 }
