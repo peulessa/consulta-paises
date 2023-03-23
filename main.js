@@ -4,15 +4,15 @@ async function imprimeTodosPaises() {
   let todosPaises = await tp.json();
 
   // IMPRIME TODOS OS PAÍSES NA TELA //
-  todosPaises.forEach((element) => {
-    let bandeira = element.flags.svg;
-    let nome = element.name.common;
-    let populacao = element.population;
-    let continente = element.continents;
-    if (element.capital) {
-      capital = element.capital[0];
+  todosPaises.forEach((pais) => {
+    let bandeira = pais.flags.svg;
+    let nome = pais.name.common;
+    let populacao = pais.population;
+    let continente = pais.continents;
+    if (pais.capital) {
+      capital = pais.capital[0];
     }
-    let subRegiao = element.subregion;
+    let subRegiao = pais.subregion;
 
     let divPaises = document.querySelector(".container__paises");
 
@@ -38,38 +38,24 @@ async function imprimeTodosPaises() {
             </div>`;
   });
 
-  // PESQUISA TODOS OS PAÍSES NA TELA //
-  let nomePaises = document.querySelectorAll(".nome-pais");
-  let nomePaisesArray = Array.from(nomePaises);
-  let inputPesquisa = document.querySelector(".pesquisa");
+  // CHAMA A FUNÇÃO DE PESQUISAR OS PAÍSES COM OS NOMES DOS PAÍSES COMO PARÂMETRO //
+  let nomePaisTitulo = document.querySelectorAll(".nome-pais");
+  pesquisaNomes(nomePaisTitulo)
+}
 
-  function escondePaises() {
-    nomePaisesArray
-      .filter(
-        (element) =>
-          !element.innerText
-            .toLowerCase()
-            .includes(inputPesquisa.value.toLowerCase())
-      )
-      .forEach((element) => {
-        element.closest(".container__pais").classList.add("hidden");
-      });
+function pesquisaNomes(listaNomes) {
+  const inputPesquisa = document.querySelector(".pesquisa");
+  const nomePaisesArray = Array.from(listaNomes);
+  
+  const escondePaises = () => {
+    nomePaisesArray.forEach(nomePais => {
+      if (!nomePais.innerText.toLowerCase().includes(inputPesquisa.value.toLowerCase())) {
+        nomePais.closest(".container__pais").classList.add("hidden");
+      } else {
+        nomePais.closest(".container__pais").classList.remove("hidden");
+      }
+    });
   }
 
-  function mostraPaises() {
-    nomePaisesArray
-      .filter((element) =>
-        element.innerText
-          .toLowerCase()
-          .includes(inputPesquisa.value.toLowerCase())
-      )
-      .forEach((element) => {
-        element.closest(".container__pais").classList.remove("hidden");
-      });
-  }
-
-  inputPesquisa.addEventListener("input", () => {
-    escondePaises();
-    mostraPaises();
-  });
+  inputPesquisa.addEventListener("input", escondePaises);
 }
