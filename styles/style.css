@@ -68,7 +68,6 @@ main {
   .container__pais{
     margin: none;
     width: 15vw;
-    /* height: 20vw; */
   }
 
   .pais-label > img {
