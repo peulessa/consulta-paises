@@ -15,8 +15,7 @@ async function imprimeTodosPaises() {
 
     let divPaises = document.querySelector(".container__paises");
 
-    divPaises.innerHTML += 
-          `<div class="container__pais">
+    divPaises.innerHTML += `<div class="container__pais">
                 <label class="pais-label">
                     <input type="button" class="pais-btn">
                     <img src="${bandeira}" alt="Bandeira do País">
@@ -40,54 +39,60 @@ async function imprimeTodosPaises() {
 
   // CHAMA A FUNÇÃO DE PESQUISAR OS PAÍSES COM OS NOMES DOS PAÍSES COMO PARÂMETRO //
   const nomePaisTitulo = document.querySelectorAll(".nome-pais");
-  pesquisaNomes(nomePaisTitulo)
+  pesquisaNomes(nomePaisTitulo);
 
   // CHAMA A FUNÇÃO DE FILTRAR OS PAÍSES POR REGIÃO
-  const regiaoPais = document.querySelectorAll(".continente")
-  filtraRegioes(regiaoPais)
+  const regiaoPais = document.querySelectorAll(".continente");
+  filtraRegioes(regiaoPais);
 }
 
+// FUNÇÃO DO INPUT DE PESQUISA
 function pesquisaNomes(listaNomes) {
   const inputPesquisa = document.querySelector(".pesquisa");
   const nomePaisesArray = Array.from(listaNomes);
-  
+
   const escondePaises = () => {
-    nomePaisesArray.forEach(nomePais => {
-      if (!nomePais.innerText.toLowerCase().includes(inputPesquisa.value.toLowerCase())) {
+    nomePaisesArray.forEach((nomePais) => {
+      if (
+        !nomePais.innerText
+          .toLowerCase()
+          .includes(inputPesquisa.value.toLowerCase())
+      ) {
         nomePais.closest(".container__pais").classList.add("hidden");
       } else {
         nomePais.closest(".container__pais").classList.remove("hidden");
       }
     });
-  }
+  };
 
   inputPesquisa.addEventListener("input", escondePaises);
 }
 
+// FUNÇÃO DO SELECT DO FILTRO
 function filtraRegioes(listaContinentes) {
-  const filtro = document.querySelector('#filtro')
-  
-  filtro.addEventListener('change', () =>{
-    const continenteFiltro = filtro.value
-    listaContinentes.forEach(continentePais => {
-      let continenteFormatado = continentePais.innerText.replace('Continente:', '').replace('South', '').replace('North', '').trim()
-      let containerPais = continentePais.closest('.container__pais')
-      if(continenteFiltro == continenteFormatado && continenteFiltro != 'Todos'){
-        containerPais.classList.remove('hidden')
-      }
-      else if(continenteFiltro != 'Todos'){
-        containerPais.classList.add('hidden')
-      }
-      else{
-        containerPais.classList.remove('hidden')
-      }
-    })
-  })
-}
+  const filtro = document.querySelector("#filtro");
 
-// if(continente.toLowerCase().includes(cont.innerText.toLowerCase)){
-//   cont.closest(".container__pais").classList.remove("hidden");
-// }
-// else{
-//   cont.closest(".container__pais").classList.add("hidden");
-// }
+  filtro.addEventListener("change", () => {
+    const continenteFiltro = filtro.value;
+
+    listaContinentes.forEach((continentePais) => {
+      let continenteFormatado = continentePais.innerText
+        .replace("Continente:", "")
+        .replace("South", "")
+        .replace("North", "")
+        .trim();
+      let containerPais = continentePais.closest(".container__pais");
+
+      if (
+        continenteFiltro == continenteFormatado &&
+        continenteFiltro != "Todos"
+      ) {
+        containerPais.classList.remove("hidden");
+      } else if (continenteFiltro != "Todos") {
+        containerPais.classList.add("hidden");
+      } else {
+        containerPais.classList.remove("hidden");
+      }
+    });
+  });
+}
