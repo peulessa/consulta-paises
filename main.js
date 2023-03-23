@@ -1,7 +1,7 @@
 imprimeTodosPaises();
 async function imprimeTodosPaises() {
-  let tp = await fetch("https://restcountries.com/v3.1/all");
-  let todosPaises = await tp.json();
+  const tp = await fetch("https://restcountries.com/v3.1/all");
+  const todosPaises = await tp.json();
 
   // IMPRIME TODOS OS PAÍSES NA TELA //
   todosPaises.forEach((pais) => {
@@ -12,11 +12,11 @@ async function imprimeTodosPaises() {
     if (pais.capital) {
       capital = pais.capital[0];
     }
-    let subRegiao = pais.subregion;
 
     let divPaises = document.querySelector(".container__paises");
 
-    divPaises.innerHTML += `<div class="container__pais">
+    divPaises.innerHTML += 
+          `<div class="container__pais">
                 <label class="pais-label">
                     <input type="button" class="pais-btn">
                     <img src="${bandeira}" alt="Bandeira do País">
@@ -27,7 +27,7 @@ async function imprimeTodosPaises() {
                         <p class="paragrafo-pais">
                             <strong>População:</strong> ${populacao}
                         </p>
-                        <p class="paragrafo-pais">
+                        <p class="paragrafo-pais continente">
                             <strong>Continente:</strong> ${continente}
                         </p>
                         <p class="paragrafo-pais">
@@ -35,12 +35,16 @@ async function imprimeTodosPaises() {
                         </p>
                     </div>
                 </label>
-            </div>`;
+          </div>`;
   });
 
   // CHAMA A FUNÇÃO DE PESQUISAR OS PAÍSES COM OS NOMES DOS PAÍSES COMO PARÂMETRO //
-  let nomePaisTitulo = document.querySelectorAll(".nome-pais");
+  const nomePaisTitulo = document.querySelectorAll(".nome-pais");
   pesquisaNomes(nomePaisTitulo)
+
+  // CHAMA A FUNÇÃO DE FILTRAR OS PAÍSES POR REGIÃO
+  const regiaoPais = document.querySelectorAll(".continente")
+  filtraRegioes(regiaoPais)
 }
 
 function pesquisaNomes(listaNomes) {
@@ -59,3 +63,31 @@ function pesquisaNomes(listaNomes) {
 
   inputPesquisa.addEventListener("input", escondePaises);
 }
+
+function filtraRegioes(listaContinentes) {
+  const filtro = document.querySelector('#filtro')
+  
+  filtro.addEventListener('change', () =>{
+    const continenteFiltro = filtro.value
+    listaContinentes.forEach(continentePais => {
+      let continenteFormatado = continentePais.innerText.replace('Continente:', '').replace('South', '').replace('North', '').trim()
+      let containerPais = continentePais.closest('.container__pais')
+      if(continenteFiltro == continenteFormatado && continenteFiltro != 'Todos'){
+        containerPais.classList.remove('hidden')
+      }
+      else if(continenteFiltro != 'Todos'){
+        containerPais.classList.add('hidden')
+      }
+      else{
+        containerPais.classList.remove('hidden')
+      }
+    })
+  })
+}
+
+// if(continente.toLowerCase().includes(cont.innerText.toLowerCase)){
+//   cont.closest(".container__pais").classList.remove("hidden");
+// }
+// else{
+//   cont.closest(".container__pais").classList.add("hidden");
+// }
