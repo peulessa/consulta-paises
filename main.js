@@ -1,98 +1,189 @@
-imprimeTodosPaises();
-async function imprimeTodosPaises() {
+//VARIÁVEIS DE TODAS AS INFORMAÇÕES DOS PAÍSES
+let bandeira = [];
+let nome = [];
+let populacao = [];
+let continente = [];
+let subContinente = [];
+let capital = [];
+let tld = [];
+let moeda = [];
+let lingua = [];
+
+const sectionPaises = document.querySelector(".container__paises");
+
+//FUNÇÃO QUE INSERE AS INFORMAÇÕES DE CADA PAÍS EM SEU RESPECTIVO ARRAY
+informacoesPaises();
+async function informacoesPaises() {
+  //RECEBE E CONVERTE OS DADOS DA API DOS PAÍSES
   const tp = await fetch("https://restcountries.com/v3.1/all");
   const todosPaises = await tp.json();
 
-  // IMPRIME TODOS OS PAÍSES NA TELA //
+  //SOBE AS INFORMAÇÕES DOS PAÍSES EM SEUS RESPECTIVOS ARRAYS
   todosPaises.forEach((pais) => {
-    let bandeira = pais.flags.svg;
-    let nome = pais.name.common;
-    let populacao = pais.population;
-    let continente = pais.continents;
+    bandeira.push(pais.flags.svg);
+    nome.push(pais.name.common);
+    populacao.push(pais.population);
+    continente.push(pais.continents);
+    subContinente.push(pais.subregion);
     if (pais.capital) {
-      capital = pais.capital[0];
+      capital.push(pais.capital[0]);
+    }
+    if (pais.tld) {
+      tld.push(pais.tld[0]);
     }
 
-    let divPaises = document.querySelector(".container__paises");
-
-    divPaises.innerHTML += `<div class="container__pais">
-                <label class="pais-label">
-                    <input type="button" class="pais-btn">
-                    <img src="${bandeira}" alt="Bandeira do País">
-                    <div class="container__info-paises">
-                        <h2 class="nome-pais">
-                        ${nome}
-                        </h2>
-                        <p class="paragrafo-pais">
-                            <strong>População:</strong> ${populacao}
-                        </p>
-                        <p class="paragrafo-pais continente">
-                            <strong>Continente:</strong> ${continente}
-                        </p>
-                        <p class="paragrafo-pais">
-                            <strong>Capital:</strong> ${capital}
-                        </p>
-                    </div>
-                </label>
-          </div>`;
+    let nomeMoeda = pais.currencies;
+    if (nomeMoeda) {
+      const nomeMoeda1 = Object.keys(nomeMoeda)[0];
+      moeda.push(nomeMoeda[nomeMoeda1].name);
+    }
+    let nomeLingua = pais.languages;
+    if (nomeLingua) {
+      const nomeLingua1 = Object.keys(nomeLingua)[0];
+      lingua.push(nomeLingua[nomeLingua1]);
+    }
   });
 
-  // CHAMA A FUNÇÃO DE PESQUISAR OS PAÍSES COM OS NOMES DOS PAÍSES COMO PARÂMETRO //
-  const nomePaisTitulo = document.querySelectorAll(".nome-pais");
-  pesquisaNomes(nomePaisTitulo);
-
-  // CHAMA A FUNÇÃO DE FILTRAR OS PAÍSES POR REGIÃO
-  const regiaoPais = document.querySelectorAll(".continente");
-  filtraRegioes(regiaoPais);
+  //CHAMA A FUNÇÃO QUE IMPRIME OS PAÍSES NA TELA
+  inserirPaisesTela(todosPaises);
 }
 
-// FUNÇÃO DO INPUT DE PESQUISA
-function pesquisaNomes(listaNomes) {
-  const inputPesquisa = document.querySelector(".pesquisa");
-  const nomePaisesArray = Array.from(listaNomes);
+//FUNÇÃO QUE INSERE OS PAÍSES NA TELA E CHAMA AS FUNÇÕES DO FILTRO E DA PESQUISA
+function inserirPaisesTela(todosPaises) {
+  let i = 0;
 
-  const escondePaises = () => {
-    nomePaisesArray.forEach((nomePais) => {
-      if (
-        !nomePais.innerText
-          .toLowerCase()
-          .includes(inputPesquisa.value.toLowerCase())
-      ) {
-        nomePais.closest(".container__pais").classList.add("hidden");
+  todosPaises.forEach(() => {
+    sectionPaises.innerHTML += `<div class="container__pais">
+                <label class="pais-label">
+                  <input type="button" class="pais-btn">
+                  <img src="${bandeira[i]}" alt="Bandeira do País">
+                  <div class="container__info-pais">
+                    <h2 class="nome-pais">
+                      ${nome[i]}
+                    </h2>
+                    <p class="paragrafo-pais populacao">
+                      <strong>População:</strong> ${populacao[i]}
+                    </p>
+                    <p class="paragrafo-pais continente">
+                      <strong>Continente:</strong> ${continente[i]}
+                    </p>
+                    <p class="paragrafo-pais capital">
+                      <strong>Capital:</strong> ${capital[i]}
+                    </p>
+                  </div>
+                </label>
+              </div>`;
+    i += 1;
+
+
+  });
+
+  //CHAMA A FUNÇÃO DE PESQUISA
+  pesquisaNomes();
+
+  //CHAMA A FUNÇÃO DO FILTRO
+  filtroRegioes();
+
+  //CHAMA A FUNÇÃO DO CLICK NO CARD
+  abreCard();
+}
+
+//FUNÇÃO DO INPUT DE PESQUISA
+function pesquisaNomes() {
+  const inputPesquisa = document.querySelector(".pesquisa");
+  let listaNomes = document.querySelectorAll(".nome-pais");
+
+  inputPesquisa.addEventListener("input", visibilidadePais);
+
+  function visibilidadePais() {
+    let textoPesquisaFormatado = inputPesquisa.value.toLowerCase();
+
+    listaNomes.forEach((nome) => {
+      let containerPais = nome.closest(".container__pais");
+      let nomeFormatado = nome.innerText.toLowerCase();
+      if (nomeFormatado.includes(textoPesquisaFormatado)) {
+        containerPais.classList.remove("hidden");
       } else {
-        nomePais.closest(".container__pais").classList.remove("hidden");
+        containerPais.classList.add("hidden");
       }
     });
-  };
-
-  inputPesquisa.addEventListener("input", escondePaises);
+  }
 }
 
 // FUNÇÃO DO SELECT DO FILTRO
-function filtraRegioes(listaContinentes) {
+function filtroRegioes() {
   const filtro = document.querySelector("#filtro");
 
   filtro.addEventListener("change", () => {
     const continenteFiltro = filtro.value;
+    let listaContinentes = document.querySelectorAll(".continente");
 
     listaContinentes.forEach((continentePais) => {
+      let containerPais = continentePais.closest(".container__pais");
       let continenteFormatado = continentePais.innerText
         .replace("Continente:", "")
         .replace("South", "")
         .replace("North", "")
         .trim();
-      let containerPais = continentePais.closest(".container__pais");
 
       if (
         continenteFiltro == continenteFormatado &&
         continenteFiltro != "Todos"
       ) {
-        containerPais.classList.remove("hidden");
+        containerPais.classList.remove("hiddenFiltro");
       } else if (continenteFiltro != "Todos") {
-        containerPais.classList.add("hidden");
+        containerPais.classList.add("hiddenFiltro");
       } else {
-        containerPais.classList.remove("hidden");
+        containerPais.classList.remove("hiddenFiltro");
       }
     });
   });
 }
+
+// FUNÇÃO QUE ABRE O MENU INFORMAÇÕES
+function abreCard() {
+  botaoCard = document.querySelectorAll(".pais-btn");
+  botaoCard.forEach((botao) => {
+    botao.addEventListener("click", () => {
+      sectionPaises.classList.add('hidden');
+    });
+  });
+}
+
+// sectionPaises.innerHTML = `
+//         <div class="container__pais-card">
+//           <input type="button" class="voltar-btn" value="&larr; Voltar">
+            
+//           <img src="${bandeira[i]}" alt="Bandeira do País">
+            
+//           <div class="container__info-pais">
+//             <h2 class="nome-pais">
+//               ${nome[i]}
+//             </h2>
+//             <p class="paragrafo-pais populacao">
+//               <strong>População:</strong> ${populacao[i]}
+//             </p>
+//             <p class="paragrafo-pais continente">
+//               <strong>Continente:</strong> ${continente[i]}
+//             </p>
+//             <p class="paragrafo-pais sub-continente">
+//               <strong>Sub-continente:</strong> ${subContinente[i]}
+//             </p>
+//             <p class="paragrafo-pais capital">
+//               <strong>Capital:</strong> ${capital[i]}
+//             </p>
+//           </div>
+
+//           <div class="container__info-pais-2">
+//             <p class="paragrafo-pais tld">
+//               <strong>Top Level Domain:</strong> ${tld[i]}
+//             </p>
+//             <p class="paragrafo-pais moeda">
+//               <strong>Moeda:</strong> ${moeda[i]}
+//             </p>
+//             <p class="paragrafo-pais lingua">
+//               <strong>Lingua:</strong> ${lingua[i]}
+//             </p>
+//           </div>
+
+//         </div>`;

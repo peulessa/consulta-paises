@@ -1,4 +1,4 @@
-.container__pais {
+.container__pais, .container__pais-card {
   background-color: var(--branco);
   margin: 2em 2em;
   border-radius: 5px;
@@ -10,13 +10,13 @@
   box-shadow: 1px 1px 5px black ;
 }
 
-.container__pais > img {
+.container__pais > img{
   width: 100%;
   border-radius: 5px;
   margin: 5em;
 }
 
-.container__info-paises {
+.container__info-pais, .container__info-pais-2{
   padding: 2.5em 1em;
 }
 
@@ -37,6 +37,10 @@
   display: none;
 }
 
-.hidden {
+.hidden, .hiddenFiltro {
   display: none;
+}
+
+.container__pais-card > img{
+  width: 100%;
 }
