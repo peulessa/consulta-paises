@@ -32,6 +32,11 @@ header {
   box-shadow: 0 1px 2px rgb(228, 217, 217);
 }
 
+a{
+  text-decoration: none;
+  color: black;
+}
+
 .dark-mode-label {
   display: flex;
   align-items: center;
@@ -47,48 +52,20 @@ main {
   margin: 1em;
 }
 
-.elementosDark{
+/* DARK MODE */
+.elementosDark {
   background-color: var(--EscuroElementos);
   color: var(--branco);
   box-shadow: none;
 }
 
-.bodyDark{
+.bodyDark {
   background-color: var(--escuroBG);
   color: var(--branco);
 }
 
-@media screen and (min-width: 1440px) {
-  .container__filtro-pesquisa {
-    display: flex;
-    align-items: center;
-    margin: 0 4em;
-    justify-content: space-between;
-  }
-
-  .container__pesquisa > input {
-    width: 25vw;
-  }
-
-  .container__paises {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-  }
-
-  .container__pais {
-    margin: none;
-    width: 15vw;
-  }
-
-  .pais-label > img {
-    height: 180px;
-    width: 15vw;
-  }
-
-  /* HIDDEN */
-  .hidden,
-  .hiddenFiltro {
-    display: none;
-  }
+/* HIDDEN */
+.hidden,
+.hiddenFiltro {
+  display: none;
 }

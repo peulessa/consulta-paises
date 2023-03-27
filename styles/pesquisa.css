@@ -14,3 +14,23 @@
     color: #9F9F9F;
     font-family: 'Overpass', sans-serif;
 }
+
+@media screen and (min-width: 1440px) {
+    /* CABEÇALHO */
+    .cabecalho{
+      padding: 2em 8em;
+    }
+    
+    /* PESQUISA */
+    .container__filtro-pesquisa {
+      display: flex;
+      align-items: center;
+      margin: 0 4em;
+      padding: 0 1.5em;
+      justify-content: space-between;
+    }
+  
+    .container__pesquisa > input {
+      width: 25vw;
+    }
+}

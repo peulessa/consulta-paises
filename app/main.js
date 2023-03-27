@@ -149,38 +149,42 @@ function abreCards(botaoCard) {
 
       sectionCards.innerHTML = `
         <div class="container__card">
-          <input type="button" class="voltar-btn" value='&larr; Voltar'>
+          <input type="button" class="voltar-btn" value="&larr; Voltar">
           
-          <img src="${bandeira[i]}" alt="Bandeira do País">
-          
-          <div class="container__info-card">
-            <h2 class="nome-pais">
-              ${nome[i]}
-            </h2>
-            <p class="paragrafo-card populacao">
-              <strong>População:</strong> ${populacao[i]}
-            </p>
-            <p class="paragrafo-card continente">
-              <strong>Continente:</strong> ${continente[i]}
-            </p>
-            <p class="paragrafo-card subContinente">
-              <strong>Sub-Continente:</strong> ${subContinente[i]}
-            </p>
-            <p class="paragrafo-card capital">
-              <strong>Capital:</strong> ${capital[i]}
-            </p>
-          </div>
-          
-          <div class="container__info-card-2">
-            <p class="paragrafo-card tld">
-              <strong>TLD:</strong> ${tld[i]}
-            </p>
-            <p class="paragrafo-card moeda">
-              <strong>Moeda:</strong> ${moeda[i]}
-            </p>
-            <p class="paragrafo-card lingua">
-              <strong>Língua:</strong> ${lingua[i]}
-            </p>
+          <div class="container__conteudo">
+            <img src="${bandeira[i]}" alt="Bandeira do País">
+            
+            <div class="container__informacoes-card">
+              <div class="container__info-card">
+                <h2 class="nome-pais">
+                  ${nome[i]}
+                </h2>
+                <p class="paragrafo-card populacao">
+                  <strong>População:</strong> ${populacao[i]}
+                </p>
+                <p class="paragrafo-card continente">
+                  <strong>Continente:</strong> ${continente[i]}
+                </p>
+                <p class="paragrafo-card subContinente">
+                  <strong>Sub-Continente:</strong> ${subContinente[i]}
+                </p>
+                <p class="paragrafo-card capital">
+                  <strong>Capital:</strong> ${capital[i]}
+                </p>
+              </div>
+            
+              <div class="container__info-card-2">
+                <p class="paragrafo-card tld">
+                  <strong>TLD:</strong> ${tld[i]}
+                </p>
+                <p class="paragrafo-card moeda">
+                  <strong>Moeda:</strong> ${moeda[i]}
+                </p>
+                <p class="paragrafo-card lingua">
+                  <strong>Língua:</strong> ${lingua[i]}
+                </p>
+              </div>
+            </div>
           </div>`;
 
       const botaoVoltar = document.querySelector(".voltar-btn");
