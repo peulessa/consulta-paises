@@ -9,7 +9,11 @@ let tld = [];
 let moeda = [];
 let lingua = [];
 
+//VARIÁVEIS DOS ELEMENTOS HTML
 const sectionPaises = document.querySelector(".container__paises");
+const sectionCards = document.querySelector(".container__cards");
+const pesquisa = document.querySelector(".pesquisa");
+const filtro = document.querySelector("#filtro");
 
 //FUNÇÃO QUE INSERE AS INFORMAÇÕES DE CADA PAÍS EM SEU RESPECTIVO ARRAY
 informacoesPaises();
@@ -48,12 +52,12 @@ async function informacoesPaises() {
   inserirPaisesTela(todosPaises);
 }
 
-//FUNÇÃO QUE INSERE OS PAÍSES NA TELA E CHAMA AS FUNÇÕES DO FILTRO E DA PESQUISA
+//FUNÇÃO QUE INSERE OS PAÍSES NA TELA E CHAMA A FUNÇÃO DOS CARDS
 function inserirPaisesTela(todosPaises) {
   let i = 0;
 
   todosPaises.forEach(() => {
-    sectionPaises.innerHTML += `<div class="container__pais">
+    sectionPaises.innerHTML += `<div class="container__pais" id=${i}>
                 <label class="pais-label">
                   <input type="button" class="pais-btn">
                   <img src="${bandeira[i]}" alt="Bandeira do País">
@@ -74,29 +78,21 @@ function inserirPaisesTela(todosPaises) {
                 </label>
               </div>`;
     i += 1;
-
-
   });
 
-  //CHAMA A FUNÇÃO DE PESQUISA
-  pesquisaNomes();
-
-  //CHAMA A FUNÇÃO DO FILTRO
-  filtroRegioes();
-
-  //CHAMA A FUNÇÃO DO CLICK NO CARD
-  abreCard();
+  let botaoCard = document.querySelectorAll(".pais-btn");
+  abreCards(botaoCard);
 }
 
 //FUNÇÃO DO INPUT DE PESQUISA
-function pesquisaNomes() {
-  const inputPesquisa = document.querySelector(".pesquisa");
+pesquisa.addEventListener("click", iniciarPesquisa);
+function iniciarPesquisa() {
   let listaNomes = document.querySelectorAll(".nome-pais");
 
-  inputPesquisa.addEventListener("input", visibilidadePais);
+  pesquisa.addEventListener("input", visibilidadePais);
 
   function visibilidadePais() {
-    let textoPesquisaFormatado = inputPesquisa.value.toLowerCase();
+    let textoPesquisaFormatado = pesquisa.value.toLowerCase();
 
     listaNomes.forEach((nome) => {
       let containerPais = nome.closest(".container__pais");
@@ -111,9 +107,8 @@ function pesquisaNomes() {
 }
 
 // FUNÇÃO DO SELECT DO FILTRO
+filtro.addEventListener("click", filtroRegioes);
 function filtroRegioes() {
-  const filtro = document.querySelector("#filtro");
-
   filtro.addEventListener("change", () => {
     const continenteFiltro = filtro.value;
     let listaContinentes = document.querySelectorAll(".continente");
@@ -140,50 +135,65 @@ function filtroRegioes() {
   });
 }
 
-// FUNÇÃO QUE ABRE O MENU INFORMAÇÕES
-function abreCard() {
-  botaoCard = document.querySelectorAll(".pais-btn");
+//FUNÇÃO QUE ABRE O CARD DE INFORMAÇÕES
+function abreCards(botaoCard) {
   botaoCard.forEach((botao) => {
     botao.addEventListener("click", () => {
-      sectionPaises.classList.add('hidden');
+      let i = botao.closest(".container__pais").id;
+
+      sectionPaises.classList.add("hidden");
+      pesquisa.classList.add("hidden");
+      filtro.classList.add("hidden");
+
+      sectionCards.innerHTML = `
+        <div class="container__card">
+          <input type="button" class="voltar-btn" value='&larr; Voltar'>
+          
+          <img src="${bandeira[i]}" alt="Bandeira do País">
+          
+          <div class="container__info-card">
+            <h2 class="nome-pais">
+              ${nome[i]}
+            </h2>
+            <p class="paragrafo-card populacao">
+              <strong>População:</strong> ${populacao[i]}
+            </p>
+            <p class="paragrafo-card continente">
+              <strong>Continente:</strong> ${continente[i]}
+            </p>
+            <p class="paragrafo-card subContinente">
+              <strong>Sub-Continente:</strong> ${subContinente[i]}
+            </p>
+            <p class="paragrafo-card capital">
+              <strong>Capital:</strong> ${capital[i]}
+            </p>
+          </div>
+          
+          <div class="container__info-card-2">
+            <p class="paragrafo-card tld">
+              <strong>TLD:</strong> ${tld[i]}
+            </p>
+            <p class="paragrafo-card moeda">
+              <strong>Moeda:</strong> ${moeda[i]}
+            </p>
+            <p class="paragrafo-card lingua">
+              <strong>Língua:</strong> ${lingua[i]}
+            </p>
+          </div>`;
+
+      const botaoVoltar = document.querySelector(".voltar-btn");
+      voltar(botaoVoltar);
     });
   });
+
+  //FUNÇÃO DO BOTÃO VOLTAR
+  function voltar(botaoVoltar) {
+    botaoVoltar.addEventListener("click", () => {
+      sectionPaises.classList.remove("hidden");
+      pesquisa.classList.remove("hidden");
+      filtro.classList.remove("hidden");
+
+      sectionCards.innerHTML = "";
+    });
+  }
 }
-
-// sectionPaises.innerHTML = `
-//         <div class="container__pais-card">
-//           <input type="button" class="voltar-btn" value="&larr; Voltar">
-            
-//           <img src="${bandeira[i]}" alt="Bandeira do País">
-            
-//           <div class="container__info-pais">
-//             <h2 class="nome-pais">
-//               ${nome[i]}
-//             </h2>
-//             <p class="paragrafo-pais populacao">
-//               <strong>População:</strong> ${populacao[i]}
-//             </p>
-//             <p class="paragrafo-pais continente">
-//               <strong>Continente:</strong> ${continente[i]}
-//             </p>
-//             <p class="paragrafo-pais sub-continente">
-//               <strong>Sub-continente:</strong> ${subContinente[i]}
-//             </p>
-//             <p class="paragrafo-pais capital">
-//               <strong>Capital:</strong> ${capital[i]}
-//             </p>
-//           </div>
-
-//           <div class="container__info-pais-2">
-//             <p class="paragrafo-pais tld">
-//               <strong>Top Level Domain:</strong> ${tld[i]}
-//             </p>
-//             <p class="paragrafo-pais moeda">
-//               <strong>Moeda:</strong> ${moeda[i]}
-//             </p>
-//             <p class="paragrafo-pais lingua">
-//               <strong>Lingua:</strong> ${lingua[i]}
-//             </p>
-//           </div>
-
-//         </div>`;
