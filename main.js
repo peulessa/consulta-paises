@@ -14,6 +14,8 @@ const sectionPaises = document.querySelector(".container__paises");
 const sectionCards = document.querySelector(".container__cards");
 const pesquisa = document.querySelector(".pesquisa");
 const filtro = document.querySelector("#filtro");
+const darkMode = document.querySelector('.dark-mode-input')
+const cabecalho = document.querySelector('.cabecalho')
 
 //FUNÇÃO QUE INSERE AS INFORMAÇÕES DE CADA PAÍS EM SEU RESPECTIVO ARRAY
 informacoesPaises();
@@ -197,3 +199,24 @@ function abreCards(botaoCard) {
     });
   }
 }
+
+//FUNÇÃO DO DARK MODE
+function toggleDarkModeClass(elemento, className, ativado) {
+  if (ativado) {
+    elemento.classList.add(className);
+  } else {
+    elemento.classList.remove(className);
+  }
+}
+
+darkMode.addEventListener('change', () => {
+  const ativado = darkMode.checked;
+  let containerPais = document.querySelectorAll(".container__pais")
+  containerPais.forEach(container => {
+    toggleDarkModeClass(container, 'elementosDark', ativado);
+  })
+  toggleDarkModeClass(document.body, 'bodyDark', ativado);
+  toggleDarkModeClass(cabecalho, 'elementosDark', ativado);
+  toggleDarkModeClass(pesquisa, 'elementosDark', ativado);
+  toggleDarkModeClass(filtro, 'elementosDark', ativado);
+});

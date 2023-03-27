@@ -47,6 +47,17 @@ main {
   margin: 1em;
 }
 
+.elementosDark{
+  background-color: var(--EscuroElementos);
+  color: var(--branco);
+  box-shadow: none;
+}
+
+.bodyDark{
+  background-color: var(--escuroBG);
+  color: var(--branco);
+}
+
 @media screen and (min-width: 1440px) {
   .container__filtro-pesquisa {
     display: flex;
@@ -65,7 +76,7 @@ main {
     justify-content: space-around;
   }
 
-  .container__pais{
+  .container__pais {
     margin: none;
     width: 15vw;
   }
@@ -73,5 +84,11 @@ main {
   .pais-label > img {
     height: 180px;
     width: 15vw;
+  }
+
+  /* HIDDEN */
+  .hidden,
+  .hiddenFiltro {
+    display: none;
   }
 }

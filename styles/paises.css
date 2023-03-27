@@ -1,4 +1,4 @@
-.container__pais, .container__pais-card {
+.container__pais{
   background-color: var(--branco);
   margin: 2em 2em;
   border-radius: 5px;
@@ -13,7 +13,6 @@
 .container__pais > img{
   width: 100%;
   border-radius: 5px;
-  margin: 5em;
 }
 
 .container__info-pais, .container__info-pais-2{
@@ -37,10 +36,35 @@
   display: none;
 }
 
-.hidden, .hiddenFiltro {
-  display: none;
+/* CARDS */
+.container__card{
+  margin: 2em, 1.5em;
+  padding: 1em;
 }
 
-.container__pais-card > img{
+.voltar-btn{
+  padding: 0.3em 1.5em;
+  margin-bottom: 3em;
+  font-family: "Overpass", sans-serif;
+  font-size: 0.9em;
+  font-weight: 500;
+  border: none;
+  box-shadow: 2px 2px 2px rgb(182, 182, 182);
+}
+
+.container__card > img{
   width: 100%;
+}
+
+.container__info-card > h2{
+  margin-top: 2em;
+}
+
+.container__info-card-2{
+  padding-top: 2em;
+}
+
+/* HIDDEN */
+.hidden, .hiddenFiltro {
+  display: none;
 }
