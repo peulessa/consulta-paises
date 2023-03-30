@@ -69,27 +69,28 @@ async function infoCountries() {
 }
 infoCountries();
 
-
-//FUNÇÃO QUE CARREGA PAÍSES NA TELA E A PAGINAÇÃO
+//FUNÇÃO INICIAL
 async function init(countriesInfo) {
-  //FACILITADOR
+  //FACILITADORES
   const html = {
     get(element) {
       return document.querySelector(element);
     },
+    getAll(element) {
+      return document.querySelectorAll(element);
+    },
   };
 
-  //CONSTANTES GERAIS DO HTML
+  //ELEMENTOS HTML USADOS EM TODA A FUNÇÃO
   const countriesList = html.get(".countries-list");
-  const paginationNum = html.get("#pagination-num");
 
   //DADOS DA PAGINAÇÃO
   const totalItems = countriesInfo.length;
   let itemsPerPage = 12;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-  let statePage = 0;
+  let statePage = 1;
 
-  //CONTROLES DA PAGINAÇÃO
+  //CONTROLES DA PAGINAÇÃO QUE CHAMAM A FUNÇÃO UPDATE
   const controls = {
     next() {
       statePage++;
@@ -105,6 +106,8 @@ async function init(countriesInfo) {
     last() {
       statePage = totalPages;
     },
+
+    //ESCUTADORES DOS CLICKS NOS BOTÕES DA PAGINAÇÃO
     createListeners() {
       html.get("#next").addEventListener("click", () => {
         controls.next();
@@ -127,17 +130,14 @@ async function init(countriesInfo) {
       });
     },
   };
-  
   controls.createListeners();
 
-  
   //FUNÇÃO DE UPDATE
   function update() {
-    console.log('entrou')
     let page = statePage - 1;
     let start = page * itemsPerPage;
     let end = start + itemsPerPage;
-    countriesList.innerHTML = '';
+    countriesList.innerHTML = "";
 
     const countriesInfoPaginated = countriesInfo.slice(start, end);
     countriesInfoPaginated.forEach((info) => {
@@ -174,8 +174,129 @@ async function init(countriesInfo) {
           </label>
         </li>`;
     });
+    updatepagination();
+  }
+
+  //FUNÇÃO QUE INSERE OS PRIMEIROS PAÍSES NA TELA
+  function insertCountries() {
+    const firstCountries = countriesInfo.slice(0, itemsPerPage);
+    firstCountries.forEach((info) => {
+      let borders = info.borders;
+      let capital = info.capital;
+      let continent = info.continent;
+      let currency = info.currency;
+      let flag = info.flag;
+      let languages = info.languages;
+      let name = info.name;
+      let nativeName = info.nativeName;
+      let population = info.population;
+      let subRegion = info.subRegion;
+      let tld = info.tld;
+
+      countriesList.innerHTML += `<li class="country">
+          <label class="country-label">
+            <input type="button" class="country-btn">
+            <img src="${flag}" alt="Bandeira do País">
+            <div class="container__info-country">
+              <h2 class="name-country">
+                ${name}
+              </h2>
+              <p class="p-country">
+                <strong>População:</strong> ${population}
+              </p>
+              <p class="p-country">
+                <strong>Continente:</strong> ${continent}
+              </p>
+              <p class="p-country">
+                <strong>Capital:</strong> ${capital}
+              </p>
+            </div>
+          </label>
+        </li>`;
+    });
+  }
+  insertCountries();
+
+  //FUNÇÃO QUE CRIA OS BOTÕES DO pagination
+  function createpaginationBtns() {
+    const divpagination = html.get("#pagination-num");
+
+    const arraypagination = Array.from(
+      Array(totalPages),
+      (_, index) => index + 1
+    );
+    arraypagination.forEach((element) => {
+      paginationBtn = document.createElement("button");
+      paginationBtn.innerHTML = element;
+      paginationBtn.classList.add(
+        "pagination-btn",
+        "hidden",
+        "pagination-number"
+      );
+      divpagination.appendChild(paginationBtn);
+    });
+
+    //IMPRIME SOMENTE OS 5 PRIMEIROS BOTÕES NA TELA
+    const paginationBtns = html.getAll(".pagination-number");
+    paginationBtns.forEach((element) => {
+      if (element.innerHTML <= 5) {
+        element.classList.remove("hidden");
+      }
+    });
+  }
+  createpaginationBtns();
+
+  //FUNÇÃO QUE ENTENDE O CLICK NO pagination
+  const paginationNumbers = html.getAll('.pagination-number')
+  paginationNumbers.forEach(number => {
+    number.addEventListener('click', () => {
+      statePage = number.innerHTML
+      update()
+      updatepagination()
+    })
+  })
+
+  //FUNÇÃO DE UPDATE DO pagination
+  function updatepagination() {
+    let maxRight = statePage + 2;
+    let maxLeft = statePage - 2;
+    if (statePage == 2) {
+      maxLeft = 1;
+      maxRight = 5;
+    }
+    if (statePage == 1) {
+      maxLeft = 0;
+      maxRight = 5;
+    }
+
+    const paginationBtns = html.getAll(".pagination-number");
+    const rangepaginationShow = [];
+
+    for (let i = maxLeft; i <= maxRight; i++) {
+      rangepaginationShow.push(i);
+    }
+
+    paginationBtns.forEach((btn) => {
+      let show = false;
+      rangepaginationShow.forEach((numbShow) => {
+        if (btn.innerHTML == String(numbShow)) {
+          show = true;
+        }
+      });
+      if (show) {
+        btn.classList.remove("hidden");
+      } else {
+        btn.classList.add("hidden");
+      }
+    });
   }
 }
+
+
+
+
+
+
 
 
 
