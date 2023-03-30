@@ -2,6 +2,7 @@
 @import url(./paises.css);
 @import url(./filtro.css);
 @import url(./pesquisa.css);
+@import url(./pagination.css);
 
 :root {
   --EscuroElementos: hsl(209, 23%, 22%);

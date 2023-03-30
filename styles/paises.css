@@ -1,40 +1,41 @@
-.container__pais{
+.country{
   background-color: var(--branco);
   margin: 2em 2em;
   border-radius: 5px;
   transition: 300ms;
   cursor: pointer;
+  list-style-type: none;
 }
 
-.container__pais:hover{
+.country:hover{
   scale: 1.1;
   box-shadow: 1px 1px 5px black ;
 }
 
-.container__pais > img{
+.country > img{
   width: 100%;
   border-radius: 5px;
 }
 
-.container__info-pais, .container__info-pais-2{
+.container__info-country, .container__info-country-2{
   padding: 2.5em 1em;
 }
 
-.nome-pais {
+.name-country {
   margin-bottom: 1.5em;
 }
 
-.paragrafo-pais {
+.p-country {
   margin-bottom: 0.5em;
 }
 
-.pais-label {
+.country-label {
   display: flex;
   flex-direction: column;
   cursor: pointer;
 }
 
-.pais-btn {
+.country-btn {
   display: none;
 }
 
@@ -69,19 +70,19 @@
 
 @media screen and (min-width: 1440px) {
   /* TELA PRINCIPAL - PAÍSES */
-  .container__paises {
+  .countries-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     column-gap: 2em;
   }
 
-  .container__pais {
+  .container__country {
     margin: none;
     width: 15vw;
   }
 
-  .pais-label > img {
+  .country-label > img {
     height: 180px;
     width: 15vw;
   }
