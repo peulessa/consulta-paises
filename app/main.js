@@ -1,10 +1,3 @@
-/*//VARIÁVEIS DOS ELEMENTOS HTML
-const sectionCards = document.querySelector(".container__cards");
-const search = document.querySelector(".pesquisa");
-const filer = document.querySelector("#filtro");
-const darkMode = document.querySelector(".dark-mode-input");
-const header = document.querySelector(".cabecalho");*/
-
 //FUNÇÃO QUE CONSOME A API E EXTRAI AS INFORMAÇÕES ÚTEIS
 async function infoCountries() {
   const countriesFetch = await fetch("https://restcountries.com/v3.1/all");
@@ -246,17 +239,17 @@ async function init(countriesInfo) {
   }
   createpaginationBtns();
 
-  //FUNÇÃO QUE ENTENDE O CLICK NO pagination
+  //FUNÇÃO QUE ENTENDE O CLICK NO PAGINATION
   const paginationNumbers = html.getAll('.pagination-number')
   paginationNumbers.forEach(number => {
     number.addEventListener('click', () => {
-      statePage = number.innerHTML
+      statePage = Number(number.innerHTML)
       update()
       updatepagination()
     })
   })
 
-  //FUNÇÃO DE UPDATE DO pagination
+  //FUNÇÃO DE UPDATE DO PAGINATION
   function updatepagination() {
     let maxRight = statePage + 2;
     let maxLeft = statePage - 2;
