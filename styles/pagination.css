@@ -3,8 +3,28 @@
     align-items: baseline;
     justify-content: center;
     column-gap: 0.5em;
+    margin: 2em 0 4em 0;
+}
+
+#pagination-num{
+    display: flex;
+    column-gap: 0.5em;
 }
 
 .pagination-btn{
-    padding: 0.5em;
+    padding: 0.8em;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 50%;
+}
+
+.pagination-btn:hover{
+    border: 1px solid black;
+}
+
+.pagination-btn:focus{
+    border: 1px solid black;
+    background-color: rgb(210, 210, 210);
 }
