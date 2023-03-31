@@ -1,4 +1,4 @@
-.pesquisa{
+.search{
     background: url(../img/lupa.png);
     background-repeat: no-repeat;
     background-position: 1.3em;
@@ -10,19 +10,19 @@
     background-color: var(--branco);
 }
 
-.pesquisa::placeholder{
+.search::placeholder{
     color: #9F9F9F;
     font-family: 'Overpass', sans-serif;
 }
 
 @media screen and (min-width: 1440px) {
     /* CABEÇALHO */
-    .cabecalho{
+    body > header{
       padding: 2em 8em;
     }
     
     /* PESQUISA */
-    .container__filtro-pesquisa {
+    .container__seekers {
       display: flex;
       align-items: center;
       margin: 0 4em;
@@ -30,7 +30,7 @@
       justify-content: space-between;
     }
   
-    .container__pesquisa > input {
+    .container__search > input {
       width: 25vw;
     }
 }
