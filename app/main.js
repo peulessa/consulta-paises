@@ -83,7 +83,7 @@ async function init(countriesInfo) {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   let statePage = 1;
 
-  //CONTROLES DA PAGINAÇÃO QUE CHAMAM A FUNÇÃO UPDATE
+  //CONTROLES DA PAGINAÇÃO
   const controls = {
     next() {
       statePage++;
@@ -125,7 +125,7 @@ async function init(countriesInfo) {
   };
   controls.createListeners();
 
-  //FUNÇÃO DE UPDATE
+  //FUNÇÃO DE UPDATE DOS PAÍSES
   function update() {
     let page = statePage - 1;
     let start = page * itemsPerPage;
@@ -210,15 +210,15 @@ async function init(countriesInfo) {
   }
   insertCountries();
 
-  //FUNÇÃO QUE CRIA OS BOTÕES DO pagination
-  function createpaginationBtns() {
-    const divpagination = html.get("#pagination-num");
+  //FUNÇÃO QUE CRIA OS BOTÕES DA PAGINAÇÃO
+  function createPaginationBtns() {
+    const divPagination = html.get("#pagination-num");
 
-    const arraypagination = Array.from(
+    const arrayPagination = Array.from(
       Array(totalPages),
       (_, index) => index + 1
     );
-    arraypagination.forEach((element) => {
+    arrayPagination.forEach((element) => {
       paginationBtn = document.createElement("button");
       paginationBtn.innerHTML = element;
       paginationBtn.classList.add(
@@ -226,7 +226,7 @@ async function init(countriesInfo) {
         "hidden",
         "pagination-number"
       );
-      divpagination.appendChild(paginationBtn);
+      divPagination.appendChild(paginationBtn);
     });
 
     //IMPRIME SOMENTE OS 5 PRIMEIROS BOTÕES NA TELA
@@ -237,19 +237,19 @@ async function init(countriesInfo) {
       }
     });
   }
-  createpaginationBtns();
+  createPaginationBtns();
 
-  //FUNÇÃO QUE ENTENDE O CLICK NO PAGINATION
-  const paginationNumbers = html.getAll('.pagination-number')
-  paginationNumbers.forEach(number => {
-    number.addEventListener('click', () => {
-      statePage = Number(number.innerHTML)
-      update()
-      updatepagination()
-    })
-  })
+  //FUNÇÃO QUE ENTENDE O CLICK NO BUTTON DA PAGINAÇÃO
+  const paginationNumbers = html.getAll(".pagination-number");
+  paginationNumbers.forEach((number) => {
+    number.addEventListener("click", () => {
+      statePage = Number(number.innerHTML);
+      update();
+      updatepagination();
+    });
+  });
 
-  //FUNÇÃO DE UPDATE DO PAGINATION
+  //FUNÇÃO DE UPDATE DA PAGINAÇÃO
   function updatepagination() {
     let maxRight = statePage + 2;
     let maxLeft = statePage - 2;
@@ -285,156 +285,28 @@ async function init(countriesInfo) {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// //FUNÇÃO DO INPUT DE PESQUISA
-// pesquisa.addEventListener("click", iniciarPesquisa);
-// function iniciarPesquisa() {
-//   let listaNomes = document.querySelectorAll(".nome-pais");
-
-//   pesquisa.addEventListener("input", visibilidadePais);
-
-//   function visibilidadePais() {
-//     let textoPesquisaFormatado = pesquisa.value.toLowerCase();
-
-//     listaNomes.forEach((nome) => {
-//       let containerPais = nome.closest(".container__pais");
-//       let nomeFormatado = nome.innerText.toLowerCase();
-//       if (nomeFormatado.includes(textoPesquisaFormatado)) {
-//         containerPais.classList.remove("hidden");
-//       } else {
-//         containerPais.classList.add("hidden");
-//       }
-//     });
-//   }
-// }
-
-// // FUNÇÃO DO SELECT DO FILTRO
-// filtro.addEventListener("click", filtroRegioes);
-// function filtroRegioes() {
-//   filtro.addEventListener("change", () => {
-//     const continenteFiltro = filtro.value;
-//     let listaContinentes = document.querySelectorAll(".continente");
-
-//     listaContinentes.forEach((continentePais) => {
-//       let containerPais = continentePais.closest(".container__pais");
-//       let continenteFormatado = continentePais.innerText
-//         .replace("Continente:", "")
-//         .replace("South", "")
-//         .replace("North", "")
-//         .trim();
-
-//       if (
-//         continenteFiltro == continenteFormatado &&
-//         continenteFiltro != "Todos"
-//       ) {
-//         containerPais.classList.remove("hiddenFiltro");
-//       } else if (continenteFiltro != "Todos") {
-//         containerPais.classList.add("hiddenFiltro");
-//       } else {
-//         containerPais.classList.remove("hiddenFiltro");
-//       }
-//     });
-//   });
-// }
-
-// //FUNÇÃO QUE ABRE O CARD DE INFORMAÇÕES
-// function abreCards(botaoCard) {
-//   botaoCard.forEach((botao) => {
-//     botao.addEventListener("click", () => {
-//       let i = botao.closest(".container__pais").id;
-
-//       sectionPaises.classList.add("hidden");
-//       pesquisa.classList.add("hidden");
-//       filtro.classList.add("hidden");
-
-//       sectionCards.innerHTML = `
-//         <div class="container__card">
-//           <input type="button" class="voltar-btn" value="&larr; Voltar">
-
-//           <div class="container__conteudo">
-//             <img src="${bandeira[i]}" alt="Bandeira do País">
-
-//             <div class="container__informacoes-card">
-//               <div class="container__info-card">
-//                 <h2 class="nome-pais">
-//                   ${nome[i]}
-//                 </h2>
-//                 <p class="paragrafo-card populacao">
-//                   <strong>População:</strong> ${populacao[i]}
-//                 </p>
-//                 <p class="paragrafo-card continente">
-//                   <strong>Continente:</strong> ${continente[i]}
-//                 </p>
-//                 <p class="paragrafo-card subContinente">
-//                   <strong>Sub-Continente:</strong> ${subContinente[i]}
-//                 </p>
-//                 <p class="paragrafo-card capital">
-//                   <strong>Capital:</strong> ${capital[i]}
-//                 </p>
-//               </div>
-
-//               <div class="container__info-card-2">
-//                 <p class="paragrafo-card tld">
-//                   <strong>TLD:</strong> ${tld[i]}
-//                 </p>
-//                 <p class="paragrafo-card moeda">
-//                   <strong>Moeda:</strong> ${moeda[i]}
-//                 </p>
-//                 <p class="paragrafo-card lingua">
-//                   <strong>Língua:</strong> ${lingua[i]}
-//                 </p>
-//               </div>
-//             </div>
-//           </div>`;
-
-//       const botaoVoltar = document.querySelector(".voltar-btn");
-//       voltar(botaoVoltar);
-//     });
-//   });
-
-//   //FUNÇÃO DO BOTÃO VOLTAR
-//   function voltar(botaoVoltar) {
-//     botaoVoltar.addEventListener("click", () => {
-//       sectionPaises.classList.remove("hidden");
-//       pesquisa.classList.remove("hidden");
-//       filtro.classList.remove("hidden");
-
-//       sectionCards.innerHTML = "";
-//     });
-//   }
-// }
-
 // //FUNÇÃO DO DARK MODE
-// function toggleDarkModeClass(elemento, className, ativado) {
-//   if (ativado) {
-//     elemento.classList.add(className);
+// function toggleDarkModeClass(element, className, active) {
+//   if (active) {
+//     element.classList.add(className);
 //   } else {
-//     elemento.classList.remove(className);
+//     element.classList.remove(className);
 //   }
 // }
 
-// darkMode.addEventListener('change', () => {
-//   const ativado = darkMode.checked;
-//   let containerPais = document.querySelectorAll(".container__pais")
-//   containerPais.forEach(container => {
-//     toggleDarkModeClass(container, 'elementosDark', ativado);
-//   })
-//   toggleDarkModeClass(document.body, 'bodyDark', ativado);
-//   toggleDarkModeClass(cabecalho, 'elementosDark', ativado);
-//   toggleDarkModeClass(pesquisa, 'elementosDark', ativado);
-//   toggleDarkModeClass(filtro, 'elementosDark', ativado);
+// const darkMode = document.querySelector(".dark-mode-input");
+// const header = document.querySelector("#header");
+// const searchInp = document.querySelector(".search");
+// const filterInp = document.querySelector(".filter");
+
+// darkMode.addEventListener("change", () => {
+//   const active = darkMode.checked;
+//   let country = document.querySelectorAll(".country");
+//   country.forEach((container) => {
+//     toggleDarkModeClass(container, "darkElements", active);
+//   });
+//   toggleDarkModeClass(document.body, "darkBody", active);
+//   toggleDarkModeClass(header, "darkElements", active);
+//   toggleDarkModeClass(searchInp, "darkElements", active);
+//   toggleDarkModeClass(filterInp, "darkElements", active);
 // });

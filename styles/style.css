@@ -4,6 +4,7 @@
 @import url(./search.css);
 @import url(./pagination.css);
 @import url(./dark-mode.css);
+@import url(./hidden.css);
 
 :root {
   --EscuroElementos: hsl(209, 23%, 22%);
