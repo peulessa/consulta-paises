@@ -1,22 +1,25 @@
-.country{
+.country {
   background-color: var(--branco);
   margin: 2em 2em;
   border-radius: 5px;
   cursor: pointer;
   list-style-type: none;
+  width: 16%;
 }
 
-.country:hover{
+.country:hover {
   scale: 1.1;
-  box-shadow: 1px 1px 5px black ;
+  box-shadow: 1px 1px 5px black;
 }
 
-.country > img{
+.country-img > img {
   width: 100%;
+  height: 200px;
   border-radius: 5px;
 }
 
-.container__info-country, .container__info-country-2{
+.container__info-country,
+.container__info-country-2 {
   padding: 2.5em 1em;
 }
 

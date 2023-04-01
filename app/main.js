@@ -63,7 +63,7 @@ async function infoCountries() {
 infoCountries();
 
 //FUNÇÃO INICIAL
-async function init(countriesInfo) {
+function init(countriesInfo) {
   //FACILITADORES
   const html = {
     get(element) {
@@ -171,11 +171,11 @@ async function init(countriesInfo) {
     });
 
     //CASO ESTEJA APLICADO O DARK MODE, APLICA-SE ISSO EM TODA PAGINAÇÃO
-    const country = document.querySelectorAll('.country');
-    country.forEach(e => {
-      toggleDarkModeClass(e, 'darkElements', active);
-    })
-    
+    const country = document.querySelectorAll(".country");
+    country.forEach((e) => {
+      toggleDarkModeClass(e, "darkElements", active);
+    });
+
     //CHAMA A FUNÇÃO QUE DA UPDATE NOS BOTÕES DE PAGINAÇÃO
     updatepagination();
   }
@@ -199,7 +199,9 @@ async function init(countriesInfo) {
       countriesList.innerHTML += `<li class="country">
           <label class="country-label">
             <input type="button" class="country-btn">
-            <img src="${flag}" alt="Bandeira do País">
+            <div class = country-img>
+              <img src="${flag}" alt="Bandeira do País">
+            </div>
             <div class="container__info-country">
               <h2 class="name-country">
                 ${name}
@@ -305,17 +307,16 @@ function toggleDarkModeClass(element, className, active) {
 }
 
 const htmlConsts = {
-  darkMode : document.querySelector(".dark-mode-input"),
-  header : document.querySelector("#header"),
-  searchInp : document.querySelector(".search"),
-  filterInp : document.querySelector(".filter")
-}
-
+  darkMode: document.querySelector(".dark-mode-input"),
+  header: document.querySelector("#header"),
+  searchInp: document.querySelector(".search"),
+  filterInp: document.querySelector(".filter"),
+};
 
 htmlConsts.darkMode.addEventListener("change", () => {
   const active = htmlConsts.darkMode.checked;
   let country = document.querySelectorAll(".country");
-  country.forEach(e => {
+  country.forEach((e) => {
     toggleDarkModeClass(e, "darkElements", active);
   });
   toggleDarkModeClass(document.body, "darkBody", active);
