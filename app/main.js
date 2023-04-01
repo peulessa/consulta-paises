@@ -304,19 +304,22 @@ function toggleDarkModeClass(element, className, active) {
   }
 }
 
-const darkMode = document.querySelector(".dark-mode-input");
-const header = document.querySelector("#header");
-const searchInp = document.querySelector(".search");
-const filterInp = document.querySelector(".filter");
+const htmlConsts = {
+  darkMode : document.querySelector(".dark-mode-input"),
+  header : document.querySelector("#header"),
+  searchInp : document.querySelector(".search"),
+  filterInp : document.querySelector(".filter")
+}
 
-darkMode.addEventListener("change", () => {
-  const active = darkMode.checked;
+
+htmlConsts.darkMode.addEventListener("change", () => {
+  const active = htmlConsts.darkMode.checked;
   let country = document.querySelectorAll(".country");
   country.forEach(e => {
     toggleDarkModeClass(e, "darkElements", active);
   });
   toggleDarkModeClass(document.body, "darkBody", active);
-  toggleDarkModeClass(header, "darkElements", active);
-  toggleDarkModeClass(searchInp, "darkElements", active);
-  toggleDarkModeClass(filterInp, "darkElements", active);
+  toggleDarkModeClass(htmlConsts.header, "darkElements", active);
+  toggleDarkModeClass(htmlConsts.searchInp, "darkElements", active);
+  toggleDarkModeClass(htmlConsts.filterInp, "darkElements", active);
 });
