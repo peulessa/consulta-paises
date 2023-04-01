@@ -131,6 +131,8 @@ async function init(countriesInfo) {
     let start = page * itemsPerPage;
     let end = start + itemsPerPage;
     countriesList.innerHTML = "";
+    const darkMode = document.querySelector(".dark-mode-input");
+    const active = darkMode.checked;
 
     const countriesInfoPaginated = countriesInfo.slice(start, end);
     countriesInfoPaginated.forEach((info) => {
@@ -167,6 +169,14 @@ async function init(countriesInfo) {
           </label>
         </li>`;
     });
+
+    //CASO ESTEJA APLICADO O DARK MODE, APLICA-SE ISSO EM TODA PAGINAÇÃO
+    const country = document.querySelectorAll('.country');
+    country.forEach(e => {
+      toggleDarkModeClass(e, 'darkElements', active);
+    })
+    
+    //CHAMA A FUNÇÃO QUE DA UPDATE NOS BOTÕES DE PAGINAÇÃO
     updatepagination();
   }
 
@@ -285,28 +295,28 @@ async function init(countriesInfo) {
   }
 }
 
-// //FUNÇÃO DO DARK MODE
-// function toggleDarkModeClass(element, className, active) {
-//   if (active) {
-//     element.classList.add(className);
-//   } else {
-//     element.classList.remove(className);
-//   }
-// }
+//FUNÇÃO DO DARK MODE
+function toggleDarkModeClass(element, className, active) {
+  if (active) {
+    element.classList.add(className);
+  } else {
+    element.classList.remove(className);
+  }
+}
 
-// const darkMode = document.querySelector(".dark-mode-input");
-// const header = document.querySelector("#header");
-// const searchInp = document.querySelector(".search");
-// const filterInp = document.querySelector(".filter");
+const darkMode = document.querySelector(".dark-mode-input");
+const header = document.querySelector("#header");
+const searchInp = document.querySelector(".search");
+const filterInp = document.querySelector(".filter");
 
-// darkMode.addEventListener("change", () => {
-//   const active = darkMode.checked;
-//   let country = document.querySelectorAll(".country");
-//   country.forEach((container) => {
-//     toggleDarkModeClass(container, "darkElements", active);
-//   });
-//   toggleDarkModeClass(document.body, "darkBody", active);
-//   toggleDarkModeClass(header, "darkElements", active);
-//   toggleDarkModeClass(searchInp, "darkElements", active);
-//   toggleDarkModeClass(filterInp, "darkElements", active);
-// });
+darkMode.addEventListener("change", () => {
+  const active = darkMode.checked;
+  let country = document.querySelectorAll(".country");
+  country.forEach(e => {
+    toggleDarkModeClass(e, "darkElements", active);
+  });
+  toggleDarkModeClass(document.body, "darkBody", active);
+  toggleDarkModeClass(header, "darkElements", active);
+  toggleDarkModeClass(searchInp, "darkElements", active);
+  toggleDarkModeClass(filterInp, "darkElements", active);
+});
