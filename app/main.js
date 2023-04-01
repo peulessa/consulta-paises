@@ -125,61 +125,6 @@ function init(countriesInfo) {
   };
   controls.createListeners();
 
-  //FUNÇÃO DE UPDATE DOS PAÍSES
-  function update() {
-    let page = statePage - 1;
-    let start = page * itemsPerPage;
-    let end = start + itemsPerPage;
-    countriesList.innerHTML = "";
-    const darkMode = document.querySelector(".dark-mode-input");
-    const active = darkMode.checked;
-
-    const countriesInfoPaginated = countriesInfo.slice(start, end);
-    countriesInfoPaginated.forEach((info) => {
-      let borders = info.borders;
-      let capital = info.capital;
-      let continent = info.continent;
-      let currency = info.currency;
-      let flag = info.flag;
-      let languages = info.languages;
-      let name = info.name;
-      let nativeName = info.nativeName;
-      let population = info.population;
-      let subRegion = info.subRegion;
-      let tld = info.tld;
-
-      countriesList.innerHTML += `<li class="country">
-          <label class="country-label">
-            <input type="button" class="country-btn">
-            <img src="${flag}" alt="Bandeira do País">
-            <div class="container__info-country">
-              <h2 class="name-country">
-                ${name}
-              </h2>
-              <p class="p-country">
-                <strong>População:</strong> ${population}
-              </p>
-              <p class="p-country">
-                <strong>Continente:</strong> ${continent}
-              </p>
-              <p class="p-country">
-                <strong>Capital:</strong> ${capital}
-              </p>
-            </div>
-          </label>
-        </li>`;
-    });
-
-    //CASO ESTEJA APLICADO O DARK MODE, APLICA-SE ISSO EM TODA PAGINAÇÃO
-    const country = document.querySelectorAll(".country");
-    country.forEach((e) => {
-      toggleDarkModeClass(e, "darkElements", active);
-    });
-
-    //CHAMA A FUNÇÃO QUE DA UPDATE NOS BOTÕES DE PAGINAÇÃO
-    updatepagination();
-  }
-
   //FUNÇÃO QUE INSERE OS PRIMEIROS PAÍSES NA TELA
   function insertCountries() {
     const firstCountries = countriesInfo.slice(0, itemsPerPage);
@@ -294,6 +239,61 @@ function init(countriesInfo) {
         btn.classList.add("hidden");
       }
     });
+  }
+
+  //FUNÇÃO DE UPDATE DOS PAÍSES
+  function update() {
+    let page = statePage - 1;
+    let start = page * itemsPerPage;
+    let end = start + itemsPerPage;
+    countriesList.innerHTML = "";
+    const darkMode = document.querySelector(".dark-mode-input");
+    const active = darkMode.checked;
+
+    const countriesInfoPaginated = countriesInfo.slice(start, end);
+    countriesInfoPaginated.forEach((info) => {
+      let borders = info.borders;
+      let capital = info.capital;
+      let continent = info.continent;
+      let currency = info.currency;
+      let flag = info.flag;
+      let languages = info.languages;
+      let name = info.name;
+      let nativeName = info.nativeName;
+      let population = info.population;
+      let subRegion = info.subRegion;
+      let tld = info.tld;
+
+      countriesList.innerHTML += `<li class="country">
+          <label class="country-label">
+            <input type="button" class="country-btn">
+            <img src="${flag}" alt="Bandeira do País">
+            <div class="container__info-country">
+              <h2 class="name-country">
+                ${name}
+              </h2>
+              <p class="p-country">
+                <strong>População:</strong> ${population}
+              </p>
+              <p class="p-country">
+                <strong>Continente:</strong> ${continent}
+              </p>
+              <p class="p-country">
+                <strong>Capital:</strong> ${capital}
+              </p>
+            </div>
+          </label>
+        </li>`;
+    });
+
+    //CASO ESTEJA APLICADO O DARK MODE, APLICA-SE ISSO EM TODA PAGINAÇÃO
+    const country = document.querySelectorAll(".country");
+    country.forEach((e) => {
+      toggleDarkModeClass(e, "darkElements", active);
+    });
+
+    //CHAMA A FUNÇÃO QUE DA UPDATE NOS BOTÕES DE PAGINAÇÃO
+    updatepagination();
   }
 }
 
