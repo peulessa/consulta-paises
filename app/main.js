@@ -104,22 +104,22 @@ function init(countriesInfo) {
     createListeners() {
       html.get("#next").addEventListener("click", () => {
         controls.next();
-        update();
+        updateCountries();
       });
 
       html.get("#prev").addEventListener("click", () => {
         controls.prev();
-        update();
+        updateCountries();
       });
 
       html.get("#first").addEventListener("click", () => {
         controls.first();
-        update();
+        updateCountries();
       });
 
       html.get("#last").addEventListener("click", () => {
         controls.last();
-        update();
+        updateCountries();
       });
     },
   };
@@ -128,7 +128,7 @@ function init(countriesInfo) {
   //FUNÇÃO QUE INSERE OS PRIMEIROS PAÍSES NA TELA
   function insertCountries() {
     const firstCountries = countriesInfo.slice(0, itemsPerPage);
-    const infoCountriesDisplay = []
+    const infoCountriesDisplay = [];
     firstCountries.forEach((info) => {
       const infoCountry = {
         borders: info.borders,
@@ -144,9 +144,9 @@ function init(countriesInfo) {
         tld: info.tld,
       };
 
-      infoCountriesDisplay.push(infoCountry)
+      infoCountriesDisplay.push(infoCountry);
 
-      countriesList.innerHTML += `<li class="country" id=${infoCountry.name}>
+      countriesList.innerHTML += `<li class="country" id="${infoCountry.name}">
           <label class="country-label">
             <input type="button" class="country-btn">
             <div class = country-img>
@@ -175,36 +175,32 @@ function init(countriesInfo) {
   }
   insertCountries();
 
-
   //FUNÇÃO QUE IDENTIFICA O CARD QUE DEVE SER CRIADO E CHAMA A FUNÇÃO DE CRIA-LO
-  function identifyCard(infoCountriesDisplay){
-    countriesDisplayBtn = document.querySelectorAll('.country-btn');
-    countriesDisplayBtn.forEach(button =>{
-      button.addEventListener('click', () =>{
-        const clickedCountry = button.closest('.country').id;
+  function identifyCard(infoCountriesDisplay) {
+    countriesDisplayBtn = document.querySelectorAll(".country-btn");
+    countriesDisplayBtn.forEach((button) => {
+      button.addEventListener("click", () => {
+        const clickedCountry = button.closest(".country").id;
         createCard(clickedCountry, infoCountriesDisplay);
       });
     });
-  };
+  }
 
   //FUNÇÃO QUE CRIA O CARD ESPECIFICADO
-  function createCard(clickedCountry, infoCountriesDisplay){
-    console.log(infoCountriesDisplay, clickedCountry);
-    const htmlConsts ={
-      search: document.querySelector('.search'),
-      filter: document.querySelector('.filter'),
-      pagination: document.querySelector('#pagination')
-    }
-
-    infoCountriesDisplay.forEach(infoCard =>{
-
-      if(infoCard.name == clickedCountry){
-        htmlConsts.filter.classList.add('hidden');
-        htmlConsts.search.classList.add('hidden');
-        htmlConsts.pagination.classList.add('hidden');
-        countriesList.innerHTML=''
-        countriesList.innerHTML=
-        `<li class="card" id=${infoCard.name}>
+  function createCard(clickedCountry, infoCountriesDisplay) {
+    const htmlConsts = {
+      search: document.querySelector(".search"),
+      filter: document.querySelector(".filter"),
+      pagination: document.querySelector("#pagination"),
+    };
+    
+    infoCountriesDisplay.forEach((infoCard) => {
+      if (infoCard.name == clickedCountry) {
+        htmlConsts.filter.classList.add("hidden");
+        htmlConsts.search.classList.add("hidden");
+        htmlConsts.pagination.classList.add("hidden");
+        countriesList.innerHTML = "";
+        countriesList.innerHTML = `<li class="card" id=${infoCard.name}>
             <input type="button" id="back-card-btn" value="&larr; Voltar">
             <div class = card-img>
               <img src="${infoCard.flag}" alt="Bandeira do País">
@@ -244,14 +240,8 @@ function init(countriesInfo) {
             </div>
         </li>`;
       }
-    })
+    });
   }
-
-
-
-
-
-
 
   //FUNÇÃO QUE CRIA OS BOTÕES DA PAGINAÇÃO
   function createPaginationBtns() {
@@ -287,7 +277,7 @@ function init(countriesInfo) {
   paginationNumbers.forEach((number) => {
     number.addEventListener("click", () => {
       statePage = Number(number.innerHTML);
-      update();
+      updateCountries();
       updatepagination();
     });
   });
@@ -328,7 +318,7 @@ function init(countriesInfo) {
   }
 
   //FUNÇÃO DE UPDATE DOS PAÍSES
-  function update() {
+  function updateCountries() {
     let page = statePage - 1;
     let start = page * itemsPerPage;
     let end = start + itemsPerPage;
@@ -339,7 +329,6 @@ function init(countriesInfo) {
 
     const countriesInfoPaginated = countriesInfo.slice(start, end);
     countriesInfoPaginated.forEach((info) => {
-      
       const infoCountry = {
         borders: info.borders,
         capital: info.capital,
@@ -354,9 +343,9 @@ function init(countriesInfo) {
         tld: info.tld,
       };
 
-      infoCountriesDisplay.push(infoCountry)
+      infoCountriesDisplay.push(infoCountry);
 
-      countriesList.innerHTML += `<li class="country" id=${infoCountry.name}>
+      countriesList.innerHTML += `<li class="country" id="${infoCountry.name}">
             <label class="country-label">
               <input type="button" class="country-btn">
               <div class = country-img>
@@ -382,7 +371,7 @@ function init(countriesInfo) {
 
     //CHAMA A FUNÇÃO QUE IDENTIFICA O CARD A SER CRIADO
     identifyCard(infoCountriesDisplay);
-    
+
     //CASO ESTEJA APLICADO O DARK MODE, APLICA-SE ISSO EM TODA PAGINAÇÃO
     const country = document.querySelectorAll(".country");
     country.forEach((e) => {
@@ -393,8 +382,6 @@ function init(countriesInfo) {
     updatepagination();
   }
 }
-
-
 
 //FUNÇÃO DO DARK MODE
 function toggleDarkModeClass(element, className, active) {
@@ -434,5 +421,4 @@ htmlConsts.darkMode.addEventListener("change", () => {
   toggleDarkModeClass(htmlConsts.filterInp, "darkElements", active);
   toggleDarkModeClass(htmlConsts.title, "darkElements", active);
   toggleDarkModeClass(htmlConsts.darkImg, "darkElements", active);
-})
-
+});
