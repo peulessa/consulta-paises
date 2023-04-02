@@ -193,14 +193,14 @@ function init(countriesInfo) {
       filter: document.querySelector(".filter"),
       pagination: document.querySelector("#pagination"),
     };
-    
+
     infoCountriesDisplay.forEach((infoCard) => {
       if (infoCard.name == clickedCountry) {
         htmlConsts.filter.classList.add("hidden");
         htmlConsts.search.classList.add("hidden");
         htmlConsts.pagination.classList.add("hidden");
 
-        countriesList.innerHTML = ""
+        countriesList.innerHTML = "";
         countriesList.innerHTML = `<li class="card" id=${infoCard.name}>
             <input type="button" id="back-card-btn" value="&larr; Voltar">
             <div class = card-img>
@@ -243,36 +243,34 @@ function init(countriesInfo) {
       }
     });
 
-    const backBtn = document.querySelector('#back-card-btn');
+    const backBtn = document.querySelector("#back-card-btn");
     backCard(backBtn);
   }
 
   //FUNÇÃO DO BOTÃO DE VOLTAR DO CARD
-  function backCard(backBtn){
-    backBtn.addEventListener('click', () =>{
+  function backCard(backBtn) {
+    backBtn.addEventListener("click", () => {
       const htmlConsts = {
         search: document.querySelector(".search"),
         filter: document.querySelector(".filter"),
         pagination: document.querySelector("#pagination"),
-        countriesInDisplay: document.querySelectorAll('.country'),
-        card: document.querySelector('.card'),
+        countriesInDisplay: document.querySelectorAll(".country"),
+        card: document.querySelector(".card"),
       };
-      
+
       htmlConsts.search.classList.remove("hidden");
       htmlConsts.filter.classList.remove("hidden");
       htmlConsts.pagination.classList.remove("hidden");
       htmlConsts.card.remove();
 
-      if(statePage == 1){
+      if (statePage == 1) {
         insertCountries();
-      }
-      else{
+      } else {
         updateCountries();
       }
-      
-    })
+    });
   }
-  
+
   //FUNÇÃO QUE CRIA OS BOTÕES DA PAGINAÇÃO
   function createPaginationBtns() {
     const divPagination = html.get("#pagination-num");
@@ -452,4 +450,3 @@ htmlConsts.darkMode.addEventListener("change", () => {
   toggleDarkModeClass(htmlConsts.title, "darkElements", active);
   toggleDarkModeClass(htmlConsts.darkImg, "darkElements", active);
 });
-

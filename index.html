@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Países</title>
-    <link rel="stylesheet" href="styles/style.css"/>
+    <link rel="stylesheet" href="styles/style.css" />
   </head>
   <body>
     <header id="header">
@@ -16,7 +16,11 @@
       <div class="dark">
         <label class="dark-mode-label">
           <input type="checkbox" class="dark-mode-input" />
-          <img class = "dark-mode-img" src="img/lua-escura.png" alt="Meia lua que indica o modo dark" />
+          <img
+            class="dark-mode-img"
+            src="img/lua-escura.png"
+            alt="Meia lua que indica o modo dark"
+          />
           <p>Dark Mode</p>
         </label>
       </div>
@@ -25,19 +29,11 @@
     <main>
       <section class="container__seekers">
         <div class="container__search">
-          <input
-            type="search"
-            class="search"
-            placeholder="Pesquise um país"
-          />
+          <input type="search" class="search" placeholder="Pesquise um país" />
         </div>
 
         <div class="container__filter">
-          <select
-            required
-            name="regions"
-            class="filter"
-          >
+          <select required name="regions" class="filter">
             <option value="" disabled selected>Filtre por região...</option>
             <option class="option" value="Africa">África</option>
             <option class="option" value="America">América</option>
@@ -50,31 +46,19 @@
       </section>
 
       <section class="container__countries">
-        <ul class="countries-list">
-
-        </ul>
+        <ul class="countries-list"></ul>
       </section>
 
       <section id="pagination">
-        
-        <button class="pagination-btn" id="first">
-          &laquo;
-        </button>
-        
-        <button class="pagination-btn" id="prev">
-          &lt;
-        </button>
-        
-        <div id="pagination-num"></div>
-        
-        <button class="pagination-btn" id="next">
-          &gt;
-        </button>
-        
-        <button class="pagination-btn" id="last">
-          &raquo;
-        </button>
+        <button class="pagination-btn" id="first">&laquo;</button>
 
+        <button class="pagination-btn" id="prev">&lt;</button>
+
+        <div id="pagination-num"></div>
+
+        <button class="pagination-btn" id="next">&gt;</button>
+
+        <button class="pagination-btn" id="last">&raquo;</button>
       </section>
     </main>
 
