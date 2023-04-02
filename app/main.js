@@ -125,102 +125,133 @@ function init(countriesInfo) {
   };
   controls.createListeners();
 
-  //FUNÇÃO DE UPDATE DOS PAÍSES
-  function update() {
-    let page = statePage - 1;
-    let start = page * itemsPerPage;
-    let end = start + itemsPerPage;
-    countriesList.innerHTML = "";
-    const darkMode = document.querySelector(".dark-mode-input");
-    const active = darkMode.checked;
-
-    const countriesInfoPaginated = countriesInfo.slice(start, end);
-    countriesInfoPaginated.forEach((info) => {
-      let borders = info.borders;
-      let capital = info.capital;
-      let continent = info.continent;
-      let currency = info.currency;
-      let flag = info.flag;
-      let languages = info.languages;
-      let name = info.name;
-      let nativeName = info.nativeName;
-      let population = info.population;
-      let subRegion = info.subRegion;
-      let tld = info.tld;
-
-      countriesList.innerHTML += `<li class="country">
-          <label class="country-label">
-            <input type="button" class="country-btn">
-            <img src="${flag}" alt="Bandeira do País">
-            <div class="container__info-country">
-              <h2 class="name-country">
-                ${name}
-              </h2>
-              <p class="p-country">
-                <strong>População:</strong> ${population}
-              </p>
-              <p class="p-country">
-                <strong>Continente:</strong> ${continent}
-              </p>
-              <p class="p-country">
-                <strong>Capital:</strong> ${capital}
-              </p>
-            </div>
-          </label>
-        </li>`;
-    });
-
-    //CASO ESTEJA APLICADO O DARK MODE, APLICA-SE ISSO EM TODA PAGINAÇÃO
-    const country = document.querySelectorAll(".country");
-    country.forEach((e) => {
-      toggleDarkModeClass(e, "darkElements", active);
-    });
-
-    //CHAMA A FUNÇÃO QUE DA UPDATE NOS BOTÕES DE PAGINAÇÃO
-    updatepagination();
-  }
-
   //FUNÇÃO QUE INSERE OS PRIMEIROS PAÍSES NA TELA
   function insertCountries() {
     const firstCountries = countriesInfo.slice(0, itemsPerPage);
+    const infoCountriesDisplay = []
     firstCountries.forEach((info) => {
-      let borders = info.borders;
-      let capital = info.capital;
-      let continent = info.continent;
-      let currency = info.currency;
-      let flag = info.flag;
-      let languages = info.languages;
-      let name = info.name;
-      let nativeName = info.nativeName;
-      let population = info.population;
-      let subRegion = info.subRegion;
-      let tld = info.tld;
+      const infoCountry = {
+        borders: info.borders,
+        capital: info.capital,
+        continent: info.continent,
+        currency: info.currency,
+        flag: info.flag,
+        languages: info.languages,
+        name: info.name,
+        nativeName: info.nativeName,
+        population: info.population,
+        subRegion: info.subRegion,
+        tld: info.tld,
+      };
 
-      countriesList.innerHTML += `<li class="country">
+      infoCountriesDisplay.push(infoCountry)
+
+      countriesList.innerHTML += `<li class="country" id=${infoCountry.name}>
           <label class="country-label">
             <input type="button" class="country-btn">
             <div class = country-img>
-              <img src="${flag}" alt="Bandeira do País">
+              <img src="${infoCountry.flag}" alt="Bandeira do País">
             </div>
             <div class="container__info-country">
               <h2 class="name-country">
-                ${name}
+                ${infoCountry.name}
               </h2>
               <p class="p-country">
-                <strong>População:</strong> ${population}
+                <strong>População:</strong> ${infoCountry.population}
               </p>
               <p class="p-country">
-                <strong>Continente:</strong> ${continent}
+                <strong>Continente:</strong> ${infoCountry.continent}
               </p>
               <p class="p-country">
-                <strong>Capital:</strong> ${capital}
+                <strong>Capital:</strong> ${infoCountry.capital}
               </p>
             </div>
           </label>
         </li>`;
     });
+
+    //CHAMA A FUNÇÃO QUE IDENTIFICA O CARD A SER CRIADO
+    identifyCard(infoCountriesDisplay);
   }
   insertCountries();
+
+
+  //FUNÇÃO QUE IDENTIFICA O CARD QUE DEVE SER CRIADO E CHAMA A FUNÇÃO DE CRIA-LO
+  function identifyCard(infoCountriesDisplay){
+    countriesDisplayBtn = document.querySelectorAll('.country-btn');
+    countriesDisplayBtn.forEach(button =>{
+      button.addEventListener('click', () =>{
+        const clickedCountry = button.closest('.country').id;
+        createCard(clickedCountry, infoCountriesDisplay);
+      });
+    });
+  };
+
+  //FUNÇÃO QUE CRIA O CARD ESPECIFICADO
+  function createCard(clickedCountry, infoCountriesDisplay){
+    console.log(infoCountriesDisplay, clickedCountry);
+    const htmlConsts ={
+      search: document.querySelector('.search'),
+      filter: document.querySelector('.filter'),
+      pagination: document.querySelector('#pagination')
+    }
+
+    infoCountriesDisplay.forEach(infoCard =>{
+
+      if(infoCard.name == clickedCountry){
+        htmlConsts.filter.classList.add('hidden');
+        htmlConsts.search.classList.add('hidden');
+        htmlConsts.pagination.classList.add('hidden');
+        countriesList.innerHTML=''
+        countriesList.innerHTML=
+        `<li class="card" id=${infoCard.name}>
+            <input type="button" id="back-card-btn" value="&larr; Voltar">
+            <div class = card-img>
+              <img src="${infoCard.flag}" alt="Bandeira do País">
+            </div>
+            
+            <div class="container__info-card">
+              <h2 class="name-card">
+                ${infoCard.name}
+              </h2>
+              <p class="p-card">
+                <strong>Nome Nativo:</strong> ${infoCard.nativeName}
+              </p>
+              <p class="p-card">
+                <strong>População:</strong> ${infoCard.population}
+              </p>
+              <p class="p-card">
+                <strong>Continente:</strong> ${infoCard.continent}
+              </p>
+              <p class="p-card">
+                <strong>Sub-Continente:</strong> ${infoCard.subRegion}
+              </p>
+              <p class="p-card">
+                <strong>Capital:</strong> ${infoCard.capital}
+              </p>
+            </div>
+            
+            <div class="container__info-card
+              <p class="p-card">
+                <strong>Domínio de Topo:</strong> ${infoCard.tld}
+              </p>
+              <p class="p-card">
+                <strong>Moeda:</strong> ${infoCard.currency}
+              </p>
+              <p class="p-card">
+                <strong>Língua:</strong> ${infoCard.languages}
+              </p>
+            </div>
+        </li>`;
+      }
+    })
+  }
+
+
+
+
+
+
 
   //FUNÇÃO QUE CRIA OS BOTÕES DA PAGINAÇÃO
   function createPaginationBtns() {
@@ -295,16 +326,84 @@ function init(countriesInfo) {
       }
     });
   }
+
+  //FUNÇÃO DE UPDATE DOS PAÍSES
+  function update() {
+    let page = statePage - 1;
+    let start = page * itemsPerPage;
+    let end = start + itemsPerPage;
+    const infoCountriesDisplay = [];
+    countriesList.innerHTML = "";
+    const darkMode = document.querySelector(".dark-mode-input");
+    const active = darkMode.checked;
+
+    const countriesInfoPaginated = countriesInfo.slice(start, end);
+    countriesInfoPaginated.forEach((info) => {
+      
+      const infoCountry = {
+        borders: info.borders,
+        capital: info.capital,
+        continent: info.continent,
+        currency: info.currency,
+        flag: info.flag,
+        languages: info.languages,
+        name: info.name,
+        nativeName: info.nativeName,
+        population: info.population,
+        subRegion: info.subRegion,
+        tld: info.tld,
+      };
+
+      infoCountriesDisplay.push(infoCountry)
+
+      countriesList.innerHTML += `<li class="country" id=${infoCountry.name}>
+            <label class="country-label">
+              <input type="button" class="country-btn">
+              <div class = country-img>
+                <img src="${infoCountry.flag}" alt="Bandeira do País">
+              </div>
+              <div class="container__info-country">
+                <h2 class="name-country">
+                  ${infoCountry.name}
+                </h2>
+                <p class="p-country">
+                  <strong>População:</strong> ${infoCountry.population}
+                </p>
+                <p class="p-country">
+                  <strong>Continente:</strong> ${infoCountry.continent}
+                </p>
+                <p class="p-country">
+                  <strong>Capital:</strong> ${infoCountry.capital}
+                </p>
+              </div>
+            </label>
+          </li>`;
+    });
+
+    //CHAMA A FUNÇÃO QUE IDENTIFICA O CARD A SER CRIADO
+    identifyCard(infoCountriesDisplay);
+    
+    //CASO ESTEJA APLICADO O DARK MODE, APLICA-SE ISSO EM TODA PAGINAÇÃO
+    const country = document.querySelectorAll(".country");
+    country.forEach((e) => {
+      toggleDarkModeClass(e, "darkElements", active);
+    });
+
+    //CHAMA A FUNÇÃO QUE DA UPDATE NOS BOTÕES DE PAGINAÇÃO
+    updatepagination();
+  }
 }
+
+
 
 //FUNÇÃO DO DARK MODE
 function toggleDarkModeClass(element, className, active) {
   darkImg = document.querySelector(".dark-mode-img");
-  if(element == darkImg){
+  if (element == darkImg) {
     if (active) {
-      darkImg.src = 'http://127.0.0.1:5500/img/lua-clara.png';
+      darkImg.src = "http://127.0.0.1:5500/img/lua-clara.png";
     } else {
-      darkImg.src = 'http://127.0.0.1:5500/img/lua-escura.png';
+      darkImg.src = "http://127.0.0.1:5500/img/lua-escura.png";
     }
   }
   if (active) {
@@ -320,7 +419,7 @@ const htmlConsts = {
   searchInp: document.querySelector(".search"),
   filterInp: document.querySelector(".filter"),
   title: document.querySelector(".title"),
-  darkImg: document.querySelector(".dark-mode-img")
+  darkImg: document.querySelector(".dark-mode-img"),
 };
 
 htmlConsts.darkMode.addEventListener("change", () => {
@@ -335,4 +434,5 @@ htmlConsts.darkMode.addEventListener("change", () => {
   toggleDarkModeClass(htmlConsts.filterInp, "darkElements", active);
   toggleDarkModeClass(htmlConsts.title, "darkElements", active);
   toggleDarkModeClass(htmlConsts.darkImg, "darkElements", active);
-});
+})
+
