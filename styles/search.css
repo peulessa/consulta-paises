@@ -13,6 +13,7 @@
 .search::placeholder{
     color: #9F9F9F;
     font-family: 'Overpass', sans-serif;
+    font-size: 1.5em;
 }
 
 @media screen and (min-width: 1440px) {

@@ -25,12 +25,17 @@ body {
   font-family: "Overpass", sans-serif;
 }
 
+main{
+  padding: 1.2em;
+}
+
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2em 1em;
-  font-size: 0.8em;
+  padding: 2em 1.2em;
+  margin-bottom: 2em;
+  font-size: 1em;
   background-color: var(--branco);
   box-shadow: 0 1px 2px rgb(228, 217, 217);
 }
@@ -43,14 +48,10 @@ a{
 .dark-mode-label {
   display: flex;
   align-items: center;
-  column-gap: 0.5em;
   cursor: pointer;
+  column-gap: 0.7em;
 }
 
 .dark-mode-input {
   display: none;
-}
-
-main {
-  margin: 1em;
 }
