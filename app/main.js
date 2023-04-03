@@ -268,6 +268,17 @@ function init(countriesInfo) {
       } else {
         updateCountries();
       }
+
+      const afterClick = {
+        countriesInDisplay: document.querySelectorAll(".country"),
+        darkMode: document.querySelector(".dark-mode-input"),
+      };
+
+      if (afterClick.darkMode.checked) {
+        afterClick.countriesInDisplay.forEach((country) => {
+          country.classList.add("darkElements");
+        });
+      }
     });
   }
 
