@@ -426,7 +426,6 @@ function init(countriesInfo) {
   function search(countriesInfo) {
     const searchInput = html.get(".search");
     const countriesList = html.get(".countries-list");
-    let infoCountriesDisplay = [];
 
     searchInput.addEventListener("input", () => {
       let searchText = searchInput.value;
@@ -511,6 +510,81 @@ function init(countriesInfo) {
     });
   }
   search(countriesInfo);
+
+  //FUNÇÃO DO FILTRO
+  function filter() {
+    const filterInput = html.get(".filter");
+    filterInput.addEventListener("change", () => {
+      countriesList.innerHTML = "";
+      const filterContinentFormated = filterInput.value.toLowerCase();
+      let infoCountriesDisplay = [];
+      const darkMode = html.get(".dark-mode-input");
+
+      if (filterContinentFormated != "todos") {
+        countriesInfo.forEach((country) => {
+          const infoCountry = {
+            borders: country.borders,
+            capital: country.capital,
+            continent: country.continent,
+            currency: country.currency,
+            flag: country.flag,
+            languages: country.languages,
+            name: country.name,
+            nativeName: country.nativeName,
+            population: country.population,
+            subRegion: country.subRegion,
+            tld: country.tld,
+          };
+
+          let continentFormated = country.continent
+            .replace("South", "")
+            .replace("North", "")
+            .trim()
+            .toLowerCase();
+
+          if (continentFormated == filterContinentFormated) {
+            countriesList.innerHTML += `<li class="country" id="${country.name}">
+                <label class="country-label">
+                  <input type="button" class="country-btn">
+                  <div class = country-img>
+                    <img src="${country.flag}" alt="Bandeira do País">
+                  </div>
+                  <div class="container__info-country">
+                    <h2 class="name-country">
+                      ${country.name}
+                    </h2>
+                    <p class="p-country">
+                      <strong>População:</strong> ${country.population}
+                    </p>
+                    <p class="p-country">
+                      <strong>Continente:</strong> ${country.continent}
+                    </p>
+                    <p class="p-country">
+                      <strong>Capital:</strong> ${country.capital}
+                    </p>
+                  </div>
+                </label>
+              </li>`;
+            infoCountriesDisplay.push(infoCountry);
+          }
+        });
+
+        //CHAMA A FUNÇÃO QUE IDENTIFICA OS CARDS A SEREM CRIADOS
+        identifyCard(infoCountriesDisplay);
+      } else {
+        insertCountries();
+      }
+
+      //VERIFICA SE PRECISA, E APLICA O DARK MODE
+      if (darkMode.checked) {
+        const countriesInDisplay = html.getAll(".country");
+        countriesInDisplay.forEach((country) => {
+          country.classList.add("darkElements");
+        });
+      }
+    });
+  }
+  filter();
 }
 
 //FUNÇÃO DO DARK MODE
