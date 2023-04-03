@@ -74,7 +74,7 @@ function init(countriesInfo) {
     },
   };
 
-  //ELEMENTOS HTML USADOS EM TODA A FUNÇÃO
+  //LISTA DE TODOS OS PAÍSES
   const countriesList = html.get(".countries-list");
 
   //DADOS DA PAGINAÇÃO
@@ -177,7 +177,7 @@ function init(countriesInfo) {
 
   //FUNÇÃO QUE IDENTIFICA O CARD QUE DEVE SER CRIADO E CHAMA A FUNÇÃO DE CRIA-LO
   function identifyCard(infoCountriesDisplay) {
-    countriesDisplayBtn = document.querySelectorAll(".country-btn");
+    countriesDisplayBtn = html.getAll(".country-btn");
     countriesDisplayBtn.forEach((button) => {
       button.addEventListener("click", () => {
         const clickedCountry = button.closest(".country").id;
@@ -189,10 +189,10 @@ function init(countriesInfo) {
   //FUNÇÃO QUE CRIA O CARD ESPECIFICADO
   function createCard(clickedCountry, infoCountriesDisplay) {
     const htmlConsts = {
-      search: document.querySelector(".search"),
-      filter: document.querySelector(".filter"),
-      pagination: document.querySelector("#pagination"),
-      countriesList: document.querySelector(".countries-list"),
+      search: html.get(".search"),
+      filter: html.get(".filter"),
+      pagination: html.get("#pagination"),
+      countriesList: html.get(".countries-list"),
     };
 
     infoCountriesDisplay.forEach((infoCard) => {
@@ -244,7 +244,7 @@ function init(countriesInfo) {
       }
     });
 
-    const backBtn = document.querySelector("#back-card-btn");
+    const backBtn = html.get("#back-card-btn");
     backCard(backBtn);
   }
 
@@ -252,11 +252,11 @@ function init(countriesInfo) {
   function backCard(backBtn) {
     backBtn.addEventListener("click", () => {
       const htmlConsts = {
-        search: document.querySelector(".search"),
-        filter: document.querySelector(".filter"),
-        pagination: document.querySelector("#pagination"),
-        countriesInDisplay: document.querySelectorAll(".country"),
-        card: document.querySelector(".card"),
+        search: html.get(".search"),
+        filter: html.get(".filter"),
+        pagination: html.get("#pagination"),
+        countriesInDisplay: html.getAll(".country"),
+        card: html.get(".card"),
       };
 
       htmlConsts.search.classList.remove("hidden");
@@ -271,8 +271,8 @@ function init(countriesInfo) {
       }
 
       const afterClick = {
-        countriesInDisplay: document.querySelectorAll(".country"),
-        darkMode: document.querySelector(".dark-mode-input"),
+        countriesInDisplay: html.getAll(".country"),
+        darkMode: html.get(".dark-mode-input"),
       };
 
       if (afterClick.darkMode.checked) {
@@ -364,7 +364,7 @@ function init(countriesInfo) {
     let end = start + itemsPerPage;
     const infoCountriesDisplay = [];
     countriesList.innerHTML = "";
-    const darkMode = document.querySelector(".dark-mode-input");
+    const darkMode = html.get(".dark-mode-input");
     const active = darkMode.checked;
 
     const countriesInfoPaginated = countriesInfo.slice(start, end);
@@ -413,7 +413,7 @@ function init(countriesInfo) {
     identifyCard(infoCountriesDisplay);
 
     //CASO ESTEJA APLICADO O DARK MODE, APLICA-SE ISSO EM TODA PAGINAÇÃO
-    const country = document.querySelectorAll(".country");
+    const country = html.getAll(".country");
     country.forEach((e) => {
       toggleDarkModeClass(e, "darkElements", active);
     });
@@ -424,13 +424,13 @@ function init(countriesInfo) {
 
   //FUNÇÃO DE PESQUISA
   function search(countriesInfo) {
-    const searchInput = document.querySelector(".search");
-    const countriesList = document.querySelector(".countries-list");
+    const searchInput = html.get(".search");
+    const countriesList = html.get(".countries-list");
     let infoCountriesDisplay = [];
 
     searchInput.addEventListener("input", () => {
       let searchText = searchInput.value;
-      const darkMode = document.querySelector(".dark-mode-input");
+      const darkMode = html.get(".dark-mode-input");
 
       countriesInfo.forEach((country) => {
         const infoCountry = {
@@ -477,8 +477,8 @@ function init(countriesInfo) {
         }
       });
 
-      const countrieInDisplay = document.querySelector(".country");
-      const countrieInDisplayBtn = document.querySelector(".country-btn");
+      const countrieInDisplay = html.get(".country");
+      const countrieInDisplayBtn = html.get(".country-btn");
 
       //VERIFICA SE PRECISA, E APLICA O DARK MODE
       if (darkMode.checked) {
@@ -498,6 +498,14 @@ function init(countriesInfo) {
         } else {
           countriesList.innerHTML = "";
           updateCountries();
+        }
+
+        //VERIFICA SE PRECISA, E APLICA O DARK MODE
+        if (darkMode.checked) {
+          const countriesInDisplay = html.getAll(".country");
+          countriesInDisplay.forEach((country) => {
+            country.classList.add("darkElements");
+          });
         }
       }
     });
