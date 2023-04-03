@@ -192,6 +192,7 @@ function init(countriesInfo) {
       search: document.querySelector(".search"),
       filter: document.querySelector(".filter"),
       pagination: document.querySelector("#pagination"),
+      countriesList: document.querySelector(".countries-list"),
     };
 
     infoCountriesDisplay.forEach((infoCard) => {
@@ -200,8 +201,8 @@ function init(countriesInfo) {
         htmlConsts.search.classList.add("hidden");
         htmlConsts.pagination.classList.add("hidden");
 
-        countriesList.innerHTML = "";
-        countriesList.innerHTML = `<li class="card" id=${infoCard.name}>
+        htmlConsts.countriesList.innerHTML = "";
+        htmlConsts.countriesList.innerHTML = `<li class="card" id=${infoCard.name}>
             <input type="button" id="back-card-btn" value="&larr; Voltar">
             <div class = card-img>
               <img src="${infoCard.flag}" alt="Bandeira do País">
@@ -420,6 +421,88 @@ function init(countriesInfo) {
     //CHAMA A FUNÇÃO QUE DA UPDATE NOS BOTÕES DE PAGINAÇÃO
     updatepagination();
   }
+
+  //FUNÇÃO DE PESQUISA
+  function search(countriesInfo) {
+    const searchInput = document.querySelector(".search");
+    const countriesList = document.querySelector(".countries-list");
+    let infoCountriesDisplay = [];
+
+    searchInput.addEventListener("input", () => {
+      let searchText = searchInput.value;
+      const darkMode = document.querySelector(".dark-mode-input");
+
+      countriesInfo.forEach((country) => {
+        const infoCountry = {
+          borders: country.borders,
+          capital: country.capital,
+          continent: country.continent,
+          currency: country.currency,
+          flag: country.flag,
+          languages: country.languages,
+          name: country.name,
+          nativeName: country.nativeName,
+          population: country.population,
+          subRegion: country.subRegion,
+          tld: country.tld,
+        };
+
+        const countryNameFormated = country.name.toUpperCase();
+        let searchTextFormated = searchText.toUpperCase();
+
+        if (countryNameFormated.includes(searchTextFormated)) {
+          countriesList.innerHTML = `<li class="country" id="${infoCountry.name}">
+              <label class="country-label">
+                <input type="button" class="country-btn">
+                <div class = country-img>
+                  <img src="${infoCountry.flag}" alt="Bandeira do País">
+                </div>
+                <div class="container__info-country">
+                  <h2 class="name-country">
+                    ${infoCountry.name}
+                  </h2>
+                  <p class="p-country">
+                    <strong>População:</strong> ${infoCountry.population}
+                  </p>
+                  <p class="p-country">
+                    <strong>Continente:</strong> ${infoCountry.continent}
+                  </p>
+                  <p class="p-country">
+                    <strong>Capital:</strong> ${infoCountry.capital}
+                  </p>
+                </div>
+              </label>
+            </li>`;
+          infoCountryDisplay = [infoCountry];
+        }
+      });
+
+      const countrieInDisplay = document.querySelector(".country");
+      const countrieInDisplayBtn = document.querySelector(".country-btn");
+
+      //VERIFICA SE PRECISA, E APLICA O DARK MODE
+      if (darkMode.checked) {
+        countrieInDisplay.classList.add("darkElements");
+      }
+
+      //CRIA O CARD DENTRO DA PESQUISA
+      countrieInDisplayBtn.addEventListener("click", () => {
+        createCard(countrieInDisplay.id, infoCountryDisplay);
+      });
+
+      //INSERE OS PAÍSES DE VOLTA NA TELA CASO A PESQUISA SEJA APAGADA
+      if (searchText.length < 1) {
+        if (statePage == 1) {
+          countriesList.innerHTML = "";
+          insertCountries();
+        } else {
+          countriesList.innerHTML = "";
+          updateCountries();
+        }
+      }
+    });
+  }
+  search(countriesInfo);
 }
 
 //FUNÇÃO DO DARK MODE
