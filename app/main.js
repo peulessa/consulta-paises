@@ -61,7 +61,6 @@ async function infoCountries() {
   init(countriesInfo);
 }
 infoCountries();
-
 //FUNÇÃO INICIAL
 function init(countriesInfo) {
   //FACILITADORES
@@ -83,6 +82,42 @@ function init(countriesInfo) {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   let statePage = 1;
 
+  //FUNÇÃO QUE CRIA OS BOTÕES DA PAGINAÇÃO
+  function createPaginationBtns(totalPages) {
+    const paginationSection = html.get("#pagination");
+    paginationSection.innerHTML = `<button class="pagination-btn" id="first">&laquo;</button>
+    <button class="pagination-btn" id="prev">&lt;</button>
+    <div id="pagination-num"></div>
+    <button class="pagination-btn" id="next">&gt;</button>
+    <button class="pagination-btn" id="last">&raquo;</button>`;
+
+    const divPagination = html.get("#pagination-num");
+
+    const arrayPagination = Array.from(
+      Array(totalPages),
+      (_, index) => index + 1
+    );
+    arrayPagination.forEach((element) => {
+      paginationBtn = document.createElement("button");
+      paginationBtn.innerHTML = element;
+      paginationBtn.classList.add(
+        "pagination-btn",
+        "hidden",
+        "pagination-number"
+      );
+      divPagination.appendChild(paginationBtn);
+    });
+
+    //IMPRIME SOMENTE OS 5 PRIMEIROS BOTÕES NA TELA
+    const paginationBtns = html.getAll(".pagination-number");
+    paginationBtns.forEach((element) => {
+      if (element.innerHTML <= 5) {
+        element.classList.remove("hidden");
+      }
+    });
+  }
+  createPaginationBtns(totalPages);
+
   //CONTROLES DA PAGINAÇÃO
   const controls = {
     next() {
@@ -101,34 +136,84 @@ function init(countriesInfo) {
     },
 
     //ESCUTADORES DOS CLICKS NOS BOTÕES DA PAGINAÇÃO
-    createListeners() {
-      html.get("#next").addEventListener("click", () => {
-        controls.next();
-        updateCountries();
-      });
-
-      html.get("#prev").addEventListener("click", () => {
-        controls.prev();
-        updateCountries();
-      });
-
-      html.get("#first").addEventListener("click", () => {
-        controls.first();
-        updateCountries();
-      });
-
-      html.get("#last").addEventListener("click", () => {
-        controls.last();
-        updateCountries();
+    createListeners(countriesInfo) {
+      const pagination = html.get('#pagination')
+      pagination.addEventListener("click", event => {
+        const target = event.target;
+        if (target.id == "next") {
+          controls.next();
+          updateCountries(countriesInfo);
+        }
+        else if (target.id == "prev"){
+          controls.prev();
+          updateCountries(countriesInfo);
+        }else if (target.id == "last"){
+          controls.last();
+          updateCountries(countriesInfo);
+        }else if (target.id == "first"){
+          controls.first();
+          updateCountries(countriesInfo);
+        }
       });
     },
   };
-  controls.createListeners();
+  controls.createListeners(countriesInfo);
 
-  //FUNÇÃO QUE INSERE OS PRIMEIROS PAÍSES NA TELA
-  function insertCountries() {
+  //FUNÇÃO QUE ENTENDE O CLICK NO BUTTON DA PAGINAÇÃO
+  function listenerPaginationClick(countriesInfo) {
+    const pagination = html.get("#pagination");
+    pagination.addEventListener("click", event => {
+      const target = event.target;
+      if (target.classList.contains("pagination-number")) {
+        statePage = Number(target.innerHTML);
+        updateCountries(countriesInfo);
+        updatepagination();
+      }
+    });
+  }
+  listenerPaginationClick(countriesInfo);
+
+  //FUNÇÃO DE UPDATE DA PAGINAÇÃO
+  function updatepagination() {
+    let maxRight = statePage + 2;
+    let maxLeft = statePage - 2;
+    if (statePage == 2) {
+      maxLeft = 1;
+      maxRight = 5;
+    }
+    if (statePage == 1) {
+      maxLeft = 0;
+      maxRight = 5;
+    }
+
+    const paginationBtns = html.getAll(".pagination-number");
+    const rangepaginationShow = [];
+
+    for (let i = maxLeft; i <= maxRight; i++) {
+      rangepaginationShow.push(i);
+    }
+
+    paginationBtns.forEach((btn) => {
+      let show = false;
+      rangepaginationShow.forEach((numbShow) => {
+        if (btn.innerHTML == String(numbShow)) {
+          show = true;
+        }
+      });
+      if (show) {
+        btn.classList.remove("hidden");
+      } else {
+        btn.classList.add("hidden");
+      }
+    });
+  }
+
+
+  //FUNÇÃO QUE INSERE OS PAÍSES NA TELA
+  function insertCountries(countriesInfo) {
     const firstCountries = countriesInfo.slice(0, itemsPerPage);
     const infoCountriesDisplay = [];
+
     firstCountries.forEach((info) => {
       const infoCountry = {
         borders: info.borders,
@@ -172,8 +257,23 @@ function init(countriesInfo) {
 
     //CHAMA A FUNÇÃO QUE IDENTIFICA O CARD A SER CRIADO
     identifyCard(infoCountriesDisplay);
+
+    //CHAMA A FUNÇÃO DE PESQUISA
+    search(countriesInfo);
+
+    //REMOVE OS BOTÕES ANTIGOS E CHAMA A FUNÇÃO QUE CRIA NOVAMENTE OS BOTÕES
+    removeOldPaginationBtns();
+    createPaginationBtns(totalPages);
+
+    //FUNÇÃO QUE REMOVE OS BOTÕES ANTIGOS DE PAGINAÇÃO
+    function removeOldPaginationBtns() {
+      btns = html.getAll(".pagination-btn");
+      btns.forEach((btn) => {
+        btn.remove();
+      });
+    }
   }
-  insertCountries();
+  insertCountries(countriesInfo);
 
   //FUNÇÃO QUE IDENTIFICA O CARD QUE DEVE SER CRIADO E CHAMA A FUNÇÃO DE CRIA-LO
   function identifyCard(infoCountriesDisplay) {
@@ -265,9 +365,9 @@ function init(countriesInfo) {
       htmlConsts.card.remove();
 
       if (statePage == 1) {
-        insertCountries();
+        insertCountries(countriesInfo);
       } else {
-        updateCountries();
+        updateCountries(countriesInfo);
       }
 
       const afterClick = {
@@ -283,82 +383,8 @@ function init(countriesInfo) {
     });
   }
 
-  //FUNÇÃO QUE CRIA OS BOTÕES DA PAGINAÇÃO
-  function createPaginationBtns() {
-    const divPagination = html.get("#pagination-num");
-
-    const arrayPagination = Array.from(
-      Array(totalPages),
-      (_, index) => index + 1
-    );
-    arrayPagination.forEach((element) => {
-      paginationBtn = document.createElement("button");
-      paginationBtn.innerHTML = element;
-      paginationBtn.classList.add(
-        "pagination-btn",
-        "hidden",
-        "pagination-number"
-      );
-      divPagination.appendChild(paginationBtn);
-    });
-
-    //IMPRIME SOMENTE OS 5 PRIMEIROS BOTÕES NA TELA
-    const paginationBtns = html.getAll(".pagination-number");
-    paginationBtns.forEach((element) => {
-      if (element.innerHTML <= 5) {
-        element.classList.remove("hidden");
-      }
-    });
-  }
-  createPaginationBtns();
-
-  //FUNÇÃO QUE ENTENDE O CLICK NO BUTTON DA PAGINAÇÃO
-  const paginationNumbers = html.getAll(".pagination-number");
-  paginationNumbers.forEach((number) => {
-    number.addEventListener("click", () => {
-      statePage = Number(number.innerHTML);
-      updateCountries();
-      updatepagination();
-    });
-  });
-
-  //FUNÇÃO DE UPDATE DA PAGINAÇÃO
-  function updatepagination() {
-    let maxRight = statePage + 2;
-    let maxLeft = statePage - 2;
-    if (statePage == 2) {
-      maxLeft = 1;
-      maxRight = 5;
-    }
-    if (statePage == 1) {
-      maxLeft = 0;
-      maxRight = 5;
-    }
-
-    const paginationBtns = html.getAll(".pagination-number");
-    const rangepaginationShow = [];
-
-    for (let i = maxLeft; i <= maxRight; i++) {
-      rangepaginationShow.push(i);
-    }
-
-    paginationBtns.forEach((btn) => {
-      let show = false;
-      rangepaginationShow.forEach((numbShow) => {
-        if (btn.innerHTML == String(numbShow)) {
-          show = true;
-        }
-      });
-      if (show) {
-        btn.classList.remove("hidden");
-      } else {
-        btn.classList.add("hidden");
-      }
-    });
-  }
-
   //FUNÇÃO DE UPDATE DOS PAÍSES
-  function updateCountries() {
+  function updateCountries(countriesInfo) {
     let page = statePage - 1;
     let start = page * itemsPerPage;
     let end = start + itemsPerPage;
@@ -422,8 +448,105 @@ function init(countriesInfo) {
     updatepagination();
   }
 
+  //FUNÇÃO DO FILTRO
+  function filter() {
+    const filterInput = html.get(".filter");
+    filterInput.addEventListener("change", () => {
+      countriesList.innerHTML = "";
+      const filterContinentFormated = filterInput.value.toLowerCase();
+      let infoCountriesDisplay = [];
+      const darkMode = html.get(".dark-mode-input");
+      let totalFilterCountries = 0;
+
+      if (filterContinentFormated != "todos") {
+        countriesInfo.forEach((country) => {
+          const infoCountry = {
+            borders: country.borders,
+            capital: country.capital,
+            continent: country.continent,
+            currency: country.currency,
+            flag: country.flag,
+            languages: country.languages,
+            name: country.name,
+            nativeName: country.nativeName,
+            population: country.population,
+            subRegion: country.subRegion,
+            tld: country.tld,
+          };
+
+          let continentFormated = country.continent
+            .replace("South", "")
+            .replace("North", "")
+            .trim()
+            .toLowerCase();
+
+          if (continentFormated == filterContinentFormated) {
+            infoCountriesDisplay.push(infoCountry);
+            totalFilterCountries++;
+          }
+        });
+        
+        //INSERE OS PAÍSES DO CONTINENTE ESPECIFICADO NA TELA, JÁ PAGINANDO
+        insertCountries(infoCountriesDisplay);
+
+        //CHAMA AS FUNÇÕES QUE VÃO SUBSTITUIR OS BOTÕES DE PAGINAÇÃO
+        removePagination();
+        addNewPagination();
+
+        //CHAMA A FUNÇÃO QUE OCULTA OS BOTÕES DE CONTROLE
+        hidePaginationControls();
+
+        //CHAMA A FUNÇÃO QUE ENTENDE O CLICK NO BOTÃO DE PAGINAÇÃO PASSANDO A NOVA LISTA DE PAÍSES
+        listenerPaginationClick(infoCountriesDisplay);
+
+        //CHAMA A FUNÇÃO QUE IDENTIFICA OS CARDS A SEREM CRIADOS
+        identifyCard(infoCountriesDisplay);
+      } else {
+        insertCountries(countriesInfo);
+        listenerPaginationClick(countriesInfo);
+      }
+
+      //FUNÇÃO QUE OCULTA OS BOTÕES DE CONTROLE DA PAGINAÇÃO
+      function hidePaginationControls() {
+        const next = html.get("#next");
+        const prev = html.get("#prev");
+        const first = html.get("#first");
+        const last = html.get("#last");
+
+        next.classList.add("hidden");
+        prev.classList.add("hidden");
+        first.classList.add("hidden");
+        last.classList.add("hidden");
+      }
+
+      //FUNÇÃO QUE REMOVE OS BOTÕES ANTIGOS DE PAGINAÇÃO
+      function removePagination() {
+        const paginationNumbers = html.getAll(".pagination-number");
+        paginationNumbers.forEach((number) => {
+          number.remove();
+        });
+      }
+
+      //FUNÇÃO QUE ADICIONA OS NOVOS BOTÕES DE PAGINAÇÃO
+      function addNewPagination() {
+        const totalPages = Math.ceil(totalFilterCountries / itemsPerPage);
+        createPaginationBtns(totalPages);
+      }
+
+      //VERIFICA SE PRECISA, E APLICA O DARK MODE
+      if (darkMode.checked) {
+        const countriesInDisplay = html.getAll(".country");
+        countriesInDisplay.forEach((country) => {
+          country.classList.add("darkElements");
+        });
+      }
+    });
+  }
+  filter();
+
   //FUNÇÃO DE PESQUISA
   function search(countriesInfo) {
+    const useInfos = countriesInfo
     const searchInput = html.get(".search");
     const countriesList = html.get(".countries-list");
 
@@ -493,10 +616,10 @@ function init(countriesInfo) {
       if (searchText.length < 1) {
         if (statePage == 1) {
           countriesList.innerHTML = "";
-          insertCountries();
+          insertCountries(countriesInfo);
         } else {
           countriesList.innerHTML = "";
-          updateCountries();
+          updateCountries(countriesInfo);
         }
 
         //VERIFICA SE PRECISA, E APLICA O DARK MODE
@@ -509,82 +632,6 @@ function init(countriesInfo) {
       }
     });
   }
-  search(countriesInfo);
-
-  //FUNÇÃO DO FILTRO
-  function filter() {
-    const filterInput = html.get(".filter");
-    filterInput.addEventListener("change", () => {
-      countriesList.innerHTML = "";
-      const filterContinentFormated = filterInput.value.toLowerCase();
-      let infoCountriesDisplay = [];
-      const darkMode = html.get(".dark-mode-input");
-
-      if (filterContinentFormated != "todos") {
-        countriesInfo.forEach((country) => {
-          const infoCountry = {
-            borders: country.borders,
-            capital: country.capital,
-            continent: country.continent,
-            currency: country.currency,
-            flag: country.flag,
-            languages: country.languages,
-            name: country.name,
-            nativeName: country.nativeName,
-            population: country.population,
-            subRegion: country.subRegion,
-            tld: country.tld,
-          };
-
-          let continentFormated = country.continent
-            .replace("South", "")
-            .replace("North", "")
-            .trim()
-            .toLowerCase();
-
-          if (continentFormated == filterContinentFormated) {
-            countriesList.innerHTML += `<li class="country" id="${country.name}">
-                <label class="country-label">
-                  <input type="button" class="country-btn">
-                  <div class = country-img>
-                    <img src="${country.flag}" alt="Bandeira do País">
-                  </div>
-                  <div class="container__info-country">
-                    <h2 class="name-country">
-                      ${country.name}
-                    </h2>
-                    <p class="p-country">
-                      <strong>População:</strong> ${country.population}
-                    </p>
-                    <p class="p-country">
-                      <strong>Continente:</strong> ${country.continent}
-                    </p>
-                    <p class="p-country">
-                      <strong>Capital:</strong> ${country.capital}
-                    </p>
-                  </div>
-                </label>
-              </li>`;
-            infoCountriesDisplay.push(infoCountry);
-          }
-        });
-
-        //CHAMA A FUNÇÃO QUE IDENTIFICA OS CARDS A SEREM CRIADOS
-        identifyCard(infoCountriesDisplay);
-      } else {
-        insertCountries();
-      }
-
-      //VERIFICA SE PRECISA, E APLICA O DARK MODE
-      if (darkMode.checked) {
-        const countriesInDisplay = html.getAll(".country");
-        countriesInDisplay.forEach((country) => {
-          country.classList.add("darkElements");
-        });
-      }
-    });
-  }
-  filter();
 }
 
 //FUNÇÃO DO DARK MODE
