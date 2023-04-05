@@ -1,0 +1,1 @@
+import { infoCountries } from "./init.js";
