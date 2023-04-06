@@ -97,7 +97,7 @@ export function listenerPaginationNumberClick() {
 //-----------------------------------------------------------------------------------------------------------------------------//
 
 //FUNÇÃO DE UPDATE DOS NÚMEROS DA PAGINAÇÃO INSERIDOS NA TELA
-function updatepagination() {
+export function updatepagination() {
   let maxRight = dades.statePage + 2;
   let maxLeft = dades.statePage - 2;
   if (dades.statePage == 2) {

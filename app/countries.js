@@ -1,5 +1,6 @@
 import { infoCountries } from "./init.js";
 import { paginatioDades } from "./init.js";
+import { updatepagination } from "./pagination.js";
 const info = await infoCountries();
 const dades = await paginatioDades();
 
@@ -142,6 +143,9 @@ function backButton(button) {
     });
     html.filter.classList.remove("hidden");
     html.search.classList.remove("hidden");
+
+    //DA UPDATE NAS FUNÇÕES DE PAGINAÇÃO
+    updatepagination()
 
     //EXCLUI O CARD
     html.card.remove();
