@@ -27,3 +27,5 @@ import { search } from "./search.js";
 
 
 //----- FUNÇÕES REFERENTES AO FILTRO -----//
+import { filter } from "./filter.js";
+filter();
