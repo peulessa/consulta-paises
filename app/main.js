@@ -22,5 +22,8 @@ listenerPaginationNumberClick();
 import { listenerPaginationControlClick } from "./pagination.js";
 listenerPaginationControlClick();
 
-//----- FUNÇÕES REFERENTES À PESQUISA -----//
+//----- FUNÇÃO REFERENTE À PESQUISA -----//
+import { search } from "./search.js";
+
+
 //----- FUNÇÕES REFERENTES AO FILTRO -----//

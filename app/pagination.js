@@ -1,7 +1,5 @@
-import { infoCountries } from "./init.js";
 import { paginatioDades } from "./init.js";
 import { updateCountries } from "./countries.js";
-const info = await infoCountries();
 const dades = await paginatioDades();
 
 //FUNÇÃO QUE CRIA OS BOTÕES DA PAGINAÇÃO

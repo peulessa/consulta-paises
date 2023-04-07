@@ -1,6 +1,7 @@
 import { infoCountries } from "./init.js";
 import { paginatioDades } from "./init.js";
 import { updatepagination } from "./pagination.js";
+import { search } from "./search.js";
 const info = await infoCountries();
 const dades = await paginatioDades();
 
@@ -35,6 +36,9 @@ export async function insertFirstCountries() {
             </label>`;
     countriesList.appendChild(initCountry);
   });
+
+  //CHAMA A FUNÇÃO DE PESQUISA
+  search();
 }
 
 //FUNÇÃO QUE IDENTIFICA O PAÍS CLICADO E CHAMA A FUNÇÃO QUE CRIA SEU CARD DE INFORMAÇÕES
@@ -200,4 +204,7 @@ export function updateCountries(statePage) {
 
   //CHAMA A FUNÇÃO QUE IDENTIFICA O CARD A SER CRIADO
   identifyCard();
+
+  // //CHAMA A FUNÇÃO DE PESQUISA
+  search();
 }
