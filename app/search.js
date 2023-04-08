@@ -1,15 +1,20 @@
-import { infoCountries } from "./init.js";
-const info = await infoCountries();
+// pega o input de pesquisa
+// pega a lista de países
+// limpa a lista de países na tela
+// MOSTRA NOVAMENTE OS PAÍSES NA TELA E EXCLUI OS JÁ PESQUISADOS
+// CRIA E INSERE O PAÍS PESQUISADO
+// remove paises quando input é limpado
 
-export function search() {
+export function search(info) {
   const html = {
     input: document.querySelector(".search"),
     countiresInDisplay: document.querySelectorAll(".country"),
     countriesList: document.querySelector(".countries-list"),
   };
 
-  let searchedCountriesList = [];
+  html.countiresInDisplay.forEach((element) => console.log(element));
 
+  let searchedCountriesList = [];
   function listenerSearch() {
     const searchText = html.input.value.toLowerCase();
 
@@ -55,9 +60,9 @@ export function search() {
             </div>
             </label>`;
         html.countriesList.appendChild(searchCountry);
-        
-        let searched = document.querySelectorAll(".searched")
-        if(searched.length > 1){
+
+        let searched = document.querySelectorAll(".searched");
+        if (searched.length > 1) {
           searched = searched[0];
         }
       }
@@ -79,5 +84,5 @@ export function search() {
     }
   }
 
-  html.input.addEventListener("input", listenerSearch);
+  listenerSearch()
 }

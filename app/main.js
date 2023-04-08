@@ -1,31 +1,39 @@
 //----- FUNÇÕES REFERENTES AOS PAÍSES E SEUS CARDS -----/
-
-//Insere os primeiros países na tela.
+import { infoCountries, paginationDadas } from "./init.js";
 import { insertFirstCountries } from "./countries.js";
-insertFirstCountries();
+import { identifyCard } from "./countries.js";
+import { search } from "./search.js";
+import { createPaginationBtns } from "./pagination.js";
+import { listenerPaginationControlClick } from "./pagination.js";
+import { listenerPaginationNumberClick } from "./pagination.js";
+import { filter } from "./filter.js";
+
+export const countriesList = [];
+let fetchPagination;
+
+const fetchCountries = await infoCountries();
+countriesList.push(...fetchCountries);
+fetchPagination = await paginationDadas(countriesList);
+
+export const countriesPagination = fetchPagination;
+
+insertFirstCountries(countriesList, countriesPagination);
 
 //Cria o card do país clicado.
-import { identifyCard } from "./countries.js";
 identifyCard();
 
-//----- FUNÇÕES REFERENTES À PAGINAÇÃO -----//
-
 //Cria os botões da paginação.
-import { createPaginationBtns } from "./pagination.js";
-createPaginationBtns();
+createPaginationBtns(countriesPagination);
 
 //Identifica o clique no botão enumerado da paginação.
-import { listenerPaginationNumberClick } from "./pagination.js";
-listenerPaginationNumberClick();
+listenerPaginationNumberClick(countriesPagination);
 
 //Identifica o clique no botão de controle da paginação.
-import { listenerPaginationControlClick } from "./pagination.js";
-listenerPaginationControlClick();
+listenerPaginationControlClick(countriesPagination);
 
 //----- FUNÇÃO REFERENTE À PESQUISA -----//
-import { search } from "./search.js";
-
+const input = document.querySelector(".search");
+input.addEventListener("input", () => search(countriesList));
 
 //----- FUNÇÕES REFERENTES AO FILTRO -----//
-import { filter } from "./filter.js";
 filter();

@@ -65,11 +65,10 @@ export async function infoCountries() {
       "Não foi possível carregar a lista de países. Porfavor, tente novamente mais tarde"
     );
   }
-};
+}
 
 //INFORMAÇÕES DA PAGINAÇÃO USADAS EM TODO CÓDIGO
-export async function paginatioDades(){
-  const allCountriesInfo = await infoCountries();
+export async function paginationDadas(allCountriesInfo) {
   const totalItems = allCountriesInfo.length;
   const itemsPerPage = 12;
 
@@ -78,7 +77,7 @@ export async function paginatioDades(){
     itemsPerPage: itemsPerPage,
     totalPages: Math.ceil(totalItems / itemsPerPage),
     statePage: 1,
-  }
+  };
 
   return dades;
 }

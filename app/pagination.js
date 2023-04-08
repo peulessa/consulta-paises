@@ -1,9 +1,8 @@
-import { paginatioDades } from "./init.js";
 import { updateCountries } from "./countries.js";
-const dades = await paginatioDades();
+import { countriesPagination } from "./main.js";
 
 //FUNÇÃO QUE CRIA OS BOTÕES DA PAGINAÇÃO
-export async function createPaginationBtns() {
+export async function createPaginationBtns(countriesPagination) {
   //CRIA OS BOTÕES DE CONTROLE E A DIV DOS BOTÕES NUMERADOS
   const paginationSection = document.querySelector("#pagination");
   paginationSection.innerHTML = `<button class="pagination-btn" id="first">&laquo;</button>
@@ -16,7 +15,7 @@ export async function createPaginationBtns() {
   const divPagination = document.querySelector("#pagination-num");
 
   const arrayPagination = Array.from(
-    Array(dades.totalPages),
+    Array(countriesPagination.totalPages),
     (_, index) => index + 1
   );
   arrayPagination.forEach((element) => {
@@ -40,54 +39,58 @@ export async function createPaginationBtns() {
 }
 
 //CONTROLES DA PAGINAÇÃO
-const controls = {
+const controls = (countriesPagination) => ({
   next() {
-    dades.statePage++;
-    dades.statePage > dades.totalPages ? dades.statePage-- : "";
-    updateCountries(dades.statePage);
+    countriesPagination.statePage++;
+    countriesPagination.statePage > countriesPagination.totalPages
+      ? countriesPagination.statePage--
+      : "";
+    updateCountries(countriesPagination.statePage, countriesPagination);
   },
   prev() {
-    dades.statePage--;
-    dades.statePage < 1 ? dades.statePage++ : "";
-    updateCountries(dades.statePage);
+    countriesPagination.statePage--;
+    countriesPagination.statePage < 1 ? countriesPagination.statePage++ : "";
+    updateCountries(countriesPagination.statePage, countriesPagination);
   },
   first() {
-    dades.statePage = 1;
-    updateCountries(dades.statePage);
+    countriesPagination.statePage = 1;
+    updateCountries(countriesPagination.statePage, countriesPagination);
   },
   last() {
-    dades.statePage = dades.totalPages;
-    updateCountries(dades.statePage);
+    countriesPagination.statePage = countriesPagination.totalPages;
+    updateCountries(countriesPagination.statePage, countriesPagination);
   },
-};
+});
 
 //FUNÇÃO QUE ENTENDE O CLICK NO BOTÃO DE CONTROLE DA PAGINAÇÃO
-export function listenerPaginationControlClick() {
+export function listenerPaginationControlClick(countriesPagination) {
+  const newControl = controls(countriesPagination);
+
   const pagination = document.querySelector("#pagination");
   pagination.addEventListener("click", (event) => {
     const target = event.target;
     if (target.id == "next") {
-      controls.next();
+      newControl.next();
     } else if (target.id == "prev") {
-      controls.prev();
+      newControl.prev();
     } else if (target.id == "last") {
-      controls.last();
+      newControl.last();
     } else if (target.id == "first") {
-      controls.first();
+      newControl.first();
     }
   });
 }
 
 //FUNÇÃO QUE ENTENDE O CLICK NO BOTÃO NUMERADO DA PAGINAÇÃO
-export function listenerPaginationNumberClick() {
+export function listenerPaginationNumberClick(countriesPagination) {
   const paginationSection = document.querySelector("#pagination");
   paginationSection.addEventListener("click", (event) => {
     const target = event.target;
 
     if (target.classList.contains("pagination-number")) {
-      dades.statePage = Number(target.innerHTML);
+      countriesPagination.statePage = Number(target.innerHTML);
       updatepagination();
-      updateCountries(dades.statePage);
+      updateCountries(countriesPagination.statePage, countriesPagination);
     }
   });
 }
@@ -96,13 +99,13 @@ export function listenerPaginationNumberClick() {
 
 //FUNÇÃO DE UPDATE DOS NÚMEROS DA PAGINAÇÃO INSERIDOS NA TELA
 export function updatepagination() {
-  let maxRight = dades.statePage + 2;
-  let maxLeft = dades.statePage - 2;
-  if (dades.statePage == 2) {
+  let maxRight = countriesPagination.statePage + 2;
+  let maxLeft = countriesPagination.statePage - 2;
+  if (countriesPagination.statePage == 2) {
     maxLeft = 1;
     maxRight = 5;
   }
-  if (dades.statePage == 1) {
+  if (countriesPagination.statePage == 1) {
     maxLeft = 0;
     maxRight = 5;
   }
