@@ -204,7 +204,4 @@ export function updateCountries(statePage) {
 
   //CHAMA A FUNÇÃO QUE IDENTIFICA O CARD A SER CRIADO
   identifyCard();
-
-  // //CHAMA A FUNÇÃO DE PESQUISA
-  search();
 }
