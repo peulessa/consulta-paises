@@ -1,5 +1,4 @@
-import { infoCountries } from "./init.js";
-const info = await infoCountries();
+
 
 export function filter() {
   const filterInput = document.querySelector(".filter");
