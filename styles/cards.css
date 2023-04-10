@@ -1,6 +1,5 @@
 .card {
     border-radius: 5px;
-    cursor: pointer;
     list-style-type: none;
     font-size: 1.5em;
     padding: 1em;
@@ -14,6 +13,7 @@
     border: none;
     border-radius: 5px;
     background-color: var(--branco);
+    cursor: pointer;
   }
   
   .card-img > img {

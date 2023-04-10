@@ -2,7 +2,6 @@ import { updateCountries } from "./countries.js";
 
 //FUNÇÃO QUE CRIA OS BOTÕES DA PAGINAÇÃO
 export async function createPaginationBtns(fetchPagination) {
-  
   //CRIA OS BOTÕES DE CONTROLE E A DIV DOS BOTÕES NUMERADOS
   const paginationSection = document.querySelector("#pagination");
   paginationSection.innerHTML = `<button class="pagination-btn" id="first">&laquo;</button>
@@ -42,30 +41,35 @@ export async function createPaginationBtns(fetchPagination) {
 const controls = {
   next(fetchPagination, fetchCountries) {
     fetchPagination.statePage++;
-    fetchPagination.statePage > fetchPagination.totalPages ? fetchPagination.statePage-- : "";
-    updateCountries(fetchPagination.statePage,fetchPagination, fetchCountries);
-    updatepagination(fetchPagination)
+    fetchPagination.statePage > fetchPagination.totalPages
+      ? fetchPagination.statePage--
+      : "";
+    updateCountries(fetchPagination.statePage, fetchPagination, fetchCountries);
+    updatepagination(fetchPagination);
   },
   prev(fetchPagination, fetchCountries) {
     fetchPagination.statePage--;
     fetchPagination.statePage < 1 ? fetchPagination.statePage++ : "";
-    updateCountries(fetchPagination.statePage,fetchPagination, fetchCountries);
-    updatepagination(fetchPagination)
+    updateCountries(fetchPagination.statePage, fetchPagination, fetchCountries);
+    updatepagination(fetchPagination);
   },
   first(fetchPagination, fetchCountries) {
     fetchPagination.statePage = 1;
-    updateCountries(fetchPagination.statePage,fetchPagination, fetchCountries);
-    updatepagination(fetchPagination)
+    updateCountries(fetchPagination.statePage, fetchPagination, fetchCountries);
+    updatepagination(fetchPagination);
   },
   last(fetchPagination, fetchCountries) {
     fetchPagination.statePage = fetchPagination.totalPages;
-    updateCountries(fetchPagination.statePage,fetchPagination, fetchCountries);
-    updatepagination(fetchPagination)
+    updateCountries(fetchPagination.statePage, fetchPagination, fetchCountries);
+    updatepagination(fetchPagination);
   },
 };
 
 //FUNÇÃO QUE ENTENDE O CLICK NO BOTÃO DE CONTROLE DA PAGINAÇÃO
-export function listenerPaginationControlClick(fetchPagination, fetchCountries) {
+export function listenerPaginationControlClick(
+  fetchPagination,
+  fetchCountries
+) {
   const pagination = document.querySelector("#pagination");
   pagination.addEventListener("click", (event) => {
     const target = event.target;
@@ -90,7 +94,11 @@ export function listenerPaginationNumberClick(fetchPagination, fetchCountries) {
     if (target.classList.contains("pagination-number")) {
       fetchPagination.statePage = Number(target.innerHTML);
       updatepagination(fetchPagination);
-      updateCountries(fetchPagination.statePage, fetchPagination, fetchCountries);
+      updateCountries(
+        fetchPagination.statePage,
+        fetchPagination,
+        fetchCountries
+      );
     }
   });
 }
@@ -99,7 +107,6 @@ export function listenerPaginationNumberClick(fetchPagination, fetchCountries) {
 
 //FUNÇÃO DE UPDATE DOS NÚMEROS DA PAGINAÇÃO INSERIDOS NA TELA
 export function updatepagination(fetchPagination) {
-  console.log(fetchPagination);
   let maxRight = fetchPagination.statePage + 2;
   let maxLeft = fetchPagination.statePage - 2;
   if (fetchPagination.statePage == 2) {

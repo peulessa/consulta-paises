@@ -3,7 +3,11 @@ import { updatepagination } from "./pagination.js";
 //FUNÇÃO QUE INSERE OS PRIMEIROS PAÍSES NA TELA
 export async function insertFirstCountries(fetchCountries, fetchPagination) {
   const countriesList = document.querySelector(".countries-list");
-  const firstCountriesInDisplay = fetchCountries.slice(0, fetchPagination.itemsPerPage);
+  countriesList.innerHTML = "";
+  const firstCountriesInDisplay = fetchCountries.slice(
+    0,
+    fetchPagination.itemsPerPage
+  );
 
   firstCountriesInDisplay.forEach((country) => {
     const initCountry = document.createElement("li");
@@ -136,14 +140,12 @@ function createCard(clickedCountry, fetchCountries, fetchPagination) {
     html.search.classList.remove("hidden");
 
     //DA UPDATE NAS FUNÇÕES DE PAGINAÇÃO
-    updatepagination(fetchPagination)
+    updatepagination(fetchPagination);
 
     //EXCLUI O CARD
     html.card.remove();
   });
 }
-
-
 
 // //-----------------------------------------------------------------------------------------------------------------------------//
 

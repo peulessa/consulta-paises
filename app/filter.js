@@ -1,15 +1,20 @@
-import { infoCountries } from "./init.js";
-const info = await infoCountries();
+import { paginatioDatas } from "./init.js";
+import { insertFirstCountries } from "./countries.js";
+import { identifyCard } from "./countries.js";
+import { createPaginationBtns } from "./pagination.js";
+import { listenerPaginationControlClick } from "./pagination.js";
+import { listenerPaginationNumberClick } from "./pagination.js";
+import { listenerSearch } from "./search.js";
 
-export function filter() {
+let filterdCountries = [];
+export async function filter(fetchCountries, fetchPagination) {
   const filterInput = document.querySelector(".filter");
-  let filterdCountries = [];
 
-  filterInput.addEventListener("change", () => {
+  filterInput.addEventListener("change", async () => {
     const filterValue = filterInput.value.toLowerCase();
     filterdCountries = [];
 
-    info.forEach((element) => {
+    fetchCountries.forEach((element) => {
       const continent = element.continent
         .toLowerCase()
         .replace("south", "")
@@ -20,5 +25,22 @@ export function filter() {
         filterdCountries.push(element);
       }
     });
+
+    if (filterValue != "todos") {
+      const newFetchPagination = await paginatioDatas(filterdCountries);
+      const newFetchCountries = filterdCountries;
+
+      insertFirstCountries(newFetchCountries, newFetchPagination);
+      identifyCard(newFetchCountries, newFetchPagination);
+      createPaginationBtns(newFetchPagination, newFetchCountries);
+      listenerPaginationControlClick(newFetchPagination, newFetchCountries);
+      listenerPaginationNumberClick(newFetchPagination, newFetchCountries);
+    } else {
+      insertFirstCountries(fetchCountries, fetchPagination);
+      identifyCard(fetchCountries, fetchPagination);
+      createPaginationBtns(fetchPagination, fetchCountries);
+      listenerPaginationControlClick(fetchPagination, fetchCountries);
+      listenerPaginationNumberClick(fetchPagination, fetchCountries);
+    }
   });
 }
