@@ -68,17 +68,17 @@ export async function infoCountries() {
 };
 
 //INFORMAÇÕES DA PAGINAÇÃO USADAS EM TODO CÓDIGO
-export async function paginatioDades(){
+export async function paginatioDatas(){
   const allCountriesInfo = await infoCountries();
   const totalItems = allCountriesInfo.length;
   const itemsPerPage = 12;
 
-  const dades = {
+  const datas = {
     totalItems: totalItems,
     itemsPerPage: itemsPerPage,
     totalPages: Math.ceil(totalItems / itemsPerPage),
     statePage: 1,
   }
 
-  return dades;
+  return datas;
 }
