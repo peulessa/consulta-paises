@@ -69,7 +69,6 @@ export async function infoCountries() {
 
 //INFORMAÇÕES DA PAGINAÇÃO USADAS EM TODO CÓDIGO
 export async function paginatioDatas(fetchCountries){
-  console.log(fetchCountries);
   const totalItems = fetchCountries.length;
   const itemsPerPage = 12;
 
