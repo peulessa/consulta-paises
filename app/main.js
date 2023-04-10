@@ -6,6 +6,7 @@ import { listenerPaginationNumberClick } from "./pagination.js";
 import { listenerPaginationControlClick } from "./pagination.js";
 import { listenerSearch } from "./search.js";
 import { filter } from "./filter.js";
+import { callDark } from "./dark-mode.js";
 
 const fetchCountries = await infoCountries();
 const fetchPagination = await paginatioDatas(fetchCountries);
@@ -35,3 +36,7 @@ searchInput.addEventListener("input", () => listenerSearch(fetchCountries));
 
 //----- FUNÇÃO REFERENTE AO FILTRO -----//
 filter(fetchCountries, fetchPagination);
+
+// ----- FUNÇÃO REFERENTE AO DARK MODE ----- //
+const darkMode = document.querySelector(".dark-mode-input");
+darkMode.addEventListener("click", callDark);

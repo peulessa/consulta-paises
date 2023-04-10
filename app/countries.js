@@ -75,7 +75,7 @@ function createCard(clickedCountry, fetchCountries, fetchPagination) {
       const card = document.createElement("li");
       card.classList.add("card");
       card.innerHTML += `
-            <input type="button" id="back-card-btn" value="&larr; Voltar">
+            <input type="button" class="back-card-btn" value="&larr; Voltar">
             <div class = card-img>
                 <img src="${info.flag}" alt="Bandeira do País">
             </div>
@@ -118,7 +118,7 @@ function createCard(clickedCountry, fetchCountries, fetchPagination) {
   });
 
   //FUNÇÃO DO BOTÃO DE VOLTAR
-  const button = document.querySelector("#back-card-btn");
+  const button = document.querySelector(".back-card-btn");
   button.addEventListener("click", () => {
     const html = {
       search: document.querySelector(".search"),
@@ -155,7 +155,6 @@ export function updateCountries(statePage, fetchPagination, fetchCountries) {
   let start = page * fetchPagination.itemsPerPage;
   let end = start + fetchPagination.itemsPerPage;
   const darkMode = document.querySelector(".dark-mode-input");
-  const active = darkMode.checked;
   const countriesList = document.querySelector(".countries-list");
 
   //REMOVE OS PAÍSES ANTIGOS
@@ -195,4 +194,13 @@ export function updateCountries(statePage, fetchPagination, fetchCountries) {
 
   //CHAMA A FUNÇÃO QUE IDENTIFICA O CARD A SER CRIADO
   identifyCard(fetchCountries, fetchPagination);
+
+  //VERIFICADOR DO DARK-MODE
+  const countries = document.querySelectorAll(".country");
+
+  if (darkMode.checked) {
+    countries.forEach((element) => {
+      element.classList.add("darkElements");
+    });
+  }
 }

@@ -42,5 +42,15 @@ export async function filter(fetchCountries, fetchPagination) {
       listenerPaginationControlClick(fetchPagination, fetchCountries);
       listenerPaginationNumberClick(fetchPagination, fetchCountries);
     }
+
+    //VERIFICADOR DO DARK-MODE
+    const countries = document.querySelectorAll(".country");
+    const darkMode = document.querySelector(".dark-mode-input");
+
+    if (darkMode.checked) {
+      countries.forEach((element) => {
+        element.classList.add("darkElements");
+      });
+    }
   });
 }

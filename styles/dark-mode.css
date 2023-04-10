@@ -1,10 +1,10 @@
 .darkElements {
-    background-color: var(--EscuroElementos);
-    color: var(--branco);
-    box-shadow: none;
-  }
-  
-  .darkBody {
-    background-color: var(--escuroBG);
-    color: var(--branco);
-  }
+  background-color: var(--EscuroElementos);
+  color: var(--branco);
+  box-shadow: none;
+}
+
+.darkBody {
+  background-color: var(--escuroBG);
+  color: var(--branco);
+}
