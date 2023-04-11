@@ -1,4 +1,5 @@
 import { updatepagination } from "./pagination.js";
+import { toggleDarkModeClass } from "./dark-mode.js";
 
 //FUNÇÃO QUE INSERE OS PRIMEIROS PAÍSES NA TELA
 export async function insertFirstCountries(fetchCountries, fetchPagination) {
@@ -57,6 +58,7 @@ function createCard(clickedCountry, fetchCountries, fetchPagination) {
     pagination: document.querySelectorAll(".pagination-btn"),
     countries: document.querySelectorAll(".country"),
     countriesList: document.querySelector(".countries-list"),
+    darkMode: document.querySelector(".dark-mode-input"),
   };
 
   //ESCONDE TODOS OS ELEMENTOS DA TELA, DEIXANDO SOMENTE O CARD VISÍVEL
@@ -112,7 +114,6 @@ function createCard(clickedCountry, fetchCountries, fetchPagination) {
                 <strong>Língua:</strong> ${info.languages}
                 </p>
             </div>`;
-
       html.countriesList.appendChild(card);
     }
   });
@@ -145,6 +146,8 @@ function createCard(clickedCountry, fetchCountries, fetchPagination) {
     //EXCLUI O CARD
     html.card.remove();
   });
+
+  toggleDarkModeClass(button, "darkElements", html.darkMode.checked);
 }
 
 // //-----------------------------------------------------------------------------------------------------------------------------//

@@ -1,5 +1,5 @@
 //FUNÇÃO DO DARK MODE
-function toggleDarkModeClass(element, className, active) {
+export function toggleDarkModeClass(element, className, active) {
   if (active) {
     element.classList.add(className);
   } else {
@@ -13,10 +13,10 @@ const html = {
   searchInp: document.querySelector(".search"),
   filterInp: document.querySelector(".filter"),
   darkMode: document.querySelector(".dark-mode-input"),
-  button: document.querySelector(".back-card-btn"),
 };
 
 export function callDark() {
+  const button = document.querySelector(".back-card-btn");
   const active = html.darkMode.checked;
   let country = document.querySelectorAll(".country");
   country.forEach((e) => {
@@ -27,4 +27,7 @@ export function callDark() {
   toggleDarkModeClass(html.header, "darkElements", active);
   toggleDarkModeClass(html.searchInp, "darkElements", active);
   toggleDarkModeClass(html.filterInp, "darkElements", active);
+  if(button){
+    toggleDarkModeClass(button, "darkElements", active);
+  }
 }

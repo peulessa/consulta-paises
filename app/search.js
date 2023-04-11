@@ -72,4 +72,14 @@ export function listenerSearch(fetchCountries) {
 
     searchedCountriesList = [];
   }
+
+  const darkMode = document.querySelector(".dark-mode-input");
+  const searchCountry = document.querySelector(".searched");
+  checkSearchDarkMode(searchCountry, darkMode);
+}
+
+function checkSearchDarkMode(searchCountry, darkMode) {
+  if (searchCountry && darkMode.checked) {
+    searchCountry.classList.add("darkElements");
+  }
 }
