@@ -3,14 +3,19 @@
 ## INDICE
 
 1. [SOBRE](SOBRE)
-2. [FEATURES](FEATURES)
-3. [TECNOLOGIAS UTILIZADAS](TECNOLOGIASUTILIZADAS)
-4. [RESUMO](RESUMOGERALDOPROJETO)
-5. [AUTOR](AUTOR)
+2. [LINK](LINK)
+3. [FEATURES](FEATURES)
+4. [TECNOLOGIAS UTILIZADAS](TECNOLOGIASUTILIZADAS)
+5. [RESUMO](RESUMOGERALDOPROJETO)
+6. [AUTOR](AUTOR)
 
 ## SOBRE
 
 Api de consulta de informações de todos os países do mundo, simples e fácil de ser utilizada, que possibilita o usuário pesquisar exatamente o país que deseja consultar, ou filtrar por continete e ver uma lista completa de todos países que fazem parte do mesmo.
+
+## LINK
+
+- https://consultor-de-paises.netlify.app
 
 ## FEATURES
 
