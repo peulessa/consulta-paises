@@ -2,12 +2,12 @@
 
 ## INDICE
 
-1. [SOBRE](SOBRE)
-2. [LINK](LINK)
-3. [FEATURES](FEATURES)
-4. [TECNOLOGIAS UTILIZADAS](TECNOLOGIASUTILIZADAS)
-5. [RESUMO](RESUMOGERALDOPROJETO)
-6. [AUTOR](AUTOR)
+1. [SOBRE](#sobre)
+2. [LINK](#link)
+3. [FEATURES](#features)
+4. [TECNOLOGIAS UTILIZADAS](#tecnologias-utilizadas)
+5. [RESUMO](#resumo-geral-do-projeto)
+6. [AUTOR](#autor)
 
 ## SOBRE
 
