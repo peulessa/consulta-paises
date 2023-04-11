@@ -10,7 +10,7 @@
 
 ## SOBRE
 
-Api de consulta de informações de todos os países do globo simples e fácil de ser utilizada, possibilitando o usuário pesquisar exatamente o país que deseja consultar, ou filtrar por continete e ver uma lista completa de todos países que fazem parte do mesmo.
+Api de consulta de informações de todos os países do mundo, simples e fácil de ser utilizada, que possibilita o usuário pesquisar exatamente o país que deseja consultar, ou filtrar por continete e ver uma lista completa de todos países que fazem parte do mesmo.
 
 ## FEATURES
 
