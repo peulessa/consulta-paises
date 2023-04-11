@@ -1,4 +1,4 @@
-export function listenerSearch(fetchCountries) {
+export function listenerSearch(fetchCountries, fetchPagination) {
   const html = {
     input: document.querySelector(".search"),
     countiresInDisplay: document.querySelectorAll(".country"),

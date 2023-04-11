@@ -32,7 +32,7 @@ listenerPaginationControlClick(fetchPagination, fetchCountries);
 
 //----- FUNÇÃO REFERENTE À PESQUISA -----//
 const searchInput = document.querySelector(".search");
-searchInput.addEventListener("input", () => listenerSearch(fetchCountries));
+searchInput.addEventListener("input", () => listenerSearch(fetchCountries, fetchPagination));
 
 //----- FUNÇÃO REFERENTE AO FILTRO -----//
 filter(fetchCountries, fetchPagination);
