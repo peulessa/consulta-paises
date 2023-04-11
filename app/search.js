@@ -1,3 +1,4 @@
+import { createCard } from "./countries.js";
 export function listenerSearch(fetchCountries, fetchPagination) {
   const html = {
     input: document.querySelector(".search"),
@@ -30,7 +31,7 @@ export function listenerSearch(fetchCountries, fetchPagination) {
       searchCountry.classList.add("searched");
       searchCountry.id = `${element.name}`;
       searchCountry.innerHTML = `<label class="country-label">
-            <input type="button" class="country-btn">
+            <input type="button" class="country-btn search-btn">
             <div class = country-img>
                 <img src="${element.flag}" alt="Bandeira do País">
             </div>
@@ -51,12 +52,23 @@ export function listenerSearch(fetchCountries, fetchPagination) {
             </label>`;
       html.countriesList.appendChild(searchCountry);
 
+      const searchBtn = document.querySelector(".search-btn");
+      createSearchedCard(element, searchBtn);
+
       let searched = document.querySelectorAll(".searched");
       if (searched.length > 1) {
         searched = searched[0];
       }
     }
   });
+
+  //CRIA O CARD DO PAÍS PESQUISADO
+  function createSearchedCard(info, button){
+    button.addEventListener("click", () =>{
+      const clickedCountry = info.name
+      createCard(clickedCountry, fetchCountries, fetchPagination)
+    })
+  }
 
   //MOSTRA NOVAMENTE OS PAÍSES NA TELA E EXCLUI OS JÁ PESQUISADOS
   if (searchText.length == 0) {

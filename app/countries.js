@@ -51,7 +51,7 @@ export function identifyCard(fetchCountries, fetchPagination) {
 }
 
 //FUNÇÃO QUE CRIA O CARD ESPECIFICADO
-function createCard(clickedCountry, fetchCountries, fetchPagination) {
+export function createCard(clickedCountry, fetchCountries, fetchPagination) {
   const html = {
     search: document.querySelector(".search"),
     filter: document.querySelector(".filter"),
@@ -128,6 +128,7 @@ function createCard(clickedCountry, fetchCountries, fetchPagination) {
       countries: document.querySelectorAll(".country"),
       countriesList: document.querySelector(".countries-list"),
       card: document.querySelector(".card"),
+      searchedCountry: document.querySelector(".searched"),
     };
 
     //MOSTRA TODOS OS ELEMENTOS DA TELA
@@ -145,6 +146,11 @@ function createCard(clickedCountry, fetchCountries, fetchPagination) {
 
     //EXCLUI O CARD
     html.card.remove();
+
+    //EXCLUI PAÍS PESQUISADO SE FOR O CASO
+    if (html.searchedCountry) {
+      html.searchedCountry.remove();
+    }
   });
 
   toggleDarkModeClass(button, "darkElements", html.darkMode.checked);
