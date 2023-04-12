@@ -15,6 +15,14 @@ export function listenerSearch(fetchCountries, fetchPagination) {
 
     //ESCONDE OS PAÍSES NA TELA PARA EXIBIR SOMENTE O PESQUISADO
     if (country.includes(searchText) && searchText.length > 3) {
+      
+      //IMPEDE A REPETIÇÃO DE CRIAÇÃO DO PAÍS PESQUISADO
+      const searchedCountry = document.querySelector(".searched");
+      if (searchedCountry) {
+        return;
+      }
+
+      //ESCONDE OS PAÍSES
       html.countiresInDisplay.forEach((element) => {
         element.classList.add("hidden");
       });
@@ -63,11 +71,11 @@ export function listenerSearch(fetchCountries, fetchPagination) {
   });
 
   //CRIA O CARD DO PAÍS PESQUISADO
-  function createSearchedCard(info, button){
-    button.addEventListener("click", () =>{
-      const clickedCountry = info.name
-      createCard(clickedCountry, fetchCountries, fetchPagination)
-    })
+  function createSearchedCard(info, button) {
+    button.addEventListener("click", () => {
+      const clickedCountry = info.name;
+      createCard(clickedCountry, fetchCountries, fetchPagination);
+    });
   }
 
   //MOSTRA NOVAMENTE OS PAÍSES NA TELA E EXCLUI OS JÁ PESQUISADOS
@@ -85,12 +93,13 @@ export function listenerSearch(fetchCountries, fetchPagination) {
     searchedCountriesList = [];
   }
 
-  const darkMode = document.querySelector(".dark-mode-input");
-  const searchCountry = document.querySelector(".searched");
-  checkSearchDarkMode(searchCountry, darkMode);
+  //CHAMA A FUNÇÃO DE VERIFICAÇÃO DO DARK MODE
+  checkSearchDarkMode()
 }
 
-function checkSearchDarkMode(searchCountry, darkMode) {
+function checkSearchDarkMode() {
+  const darkMode = document.querySelector(".dark-mode-input");
+  const searchCountry = document.querySelector(".searched");
   if (searchCountry && darkMode.checked) {
     searchCountry.classList.add("darkElements");
   }
